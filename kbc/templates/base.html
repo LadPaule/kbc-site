@@ -17,7 +17,7 @@
       {# Global stylesheets #}
       <!-- Google Fonts -->
       <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
+      {% include 'seo/se_optmization.html' %}
       <!-- Vendor CSS Files -->
       <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
       <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
@@ -34,7 +34,7 @@
       {% endblock %}
     </head>
 
-    <body class="{% block body_class %}{% endblock %}">
+    <body id="body_styles" class="{% block body_class %}{% endblock %}">
       {% include 'layouts/navigation.html' %}
         {% wagtailuserbar %}
         <main>
