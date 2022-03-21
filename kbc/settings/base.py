@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'search',
     'kbc',
     'blog',
+    'admindashboard',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
