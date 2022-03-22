@@ -1,3 +1,20 @@
 .sidebar__inner {
   background: #0c0016 !important;
 }
+
+.breadcrumb {
+  background: #000e5f !important;
+}
+.index {
+  background: #006697 !important;
+}
+
+.breadcrumb .arrow_right_icon {
+  color: #fff !important;
+}
+.hasform {
+  background: #006697 !important;
+}
+header {
+  background: #006697 !important;
+}
