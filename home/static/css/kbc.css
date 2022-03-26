@@ -30,6 +30,9 @@ h5,
 h6 {
   font-family: "Roboto", sans-serif;
 }
+.hero{
+  margin-top: -10px;
+}
 
 /*--------------------------------------------------------------
 # Back to top button

@@ -10,6 +10,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   color: #29246b;
+  margin-top: -20px;
 }
 
 a {
@@ -1842,6 +1843,9 @@ section {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+.hero {
+  margin-top: -10px;
 }
 #footer .footer-top .footer-links ul i {
   padding-right: 2px;
