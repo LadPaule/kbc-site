@@ -37,11 +37,12 @@
     <body id="body_styles" class="{% block body_class %}{% endblock %}">
       {% include 'layouts/navigation.html' %}
         {% wagtailuserbar %}
-        <main>
+
+
           {% block content %}
           
           {% endblock %}
-        </main>
+
         {# Global javascript #}
 
         {% comment %} footer {% endcomment %}
@@ -61,4 +62,7 @@
             {# Override this in templates to add extra javascript #}
         {% endblock %}
     </body>
+    <script>
+      AOS.init();
+ </script>
 </html>
