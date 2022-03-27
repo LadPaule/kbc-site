@@ -1,18 +1,14 @@
 {% extends "base.html" %} 
-{% load wagtailcore_tags wagtailimages_tags %} 
+{% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
 {% load static %} 
 {% block body_class %}template-homepage{% endblock %} {% block extra_css %} 
 {% endblock extra_css %} 
 {% block content %} 
   <!-- ======= Hero Section ======= -->
-
   <section id="hero" style="margin-top: -10px">
     <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
-
-      <div class="carousel-inner" role="listbox">
-
-        
-         {% for item in page.gallery_images.all %}
+      <div class="carousel-inner" role="listbox">     
+        {% for item in page.gallery_images.all %}
           {% image item.image original as slide_image %}
             <div class="carousel-item {% if forloop.first %} active {% endif %}">
               <img src="{{slide_image.url}}" width=1920 height=1088/>
@@ -29,7 +25,6 @@
               </div>
             </div>
         {% endfor %}
-       
       </div>
 
       <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
@@ -44,35 +39,37 @@
 
     </div>
   </section><!-- End Hero -->
-   <!-- ======= About Us Section ======= -->
-   <section id="about-us" class="about-us">
-    <div class="container" data-aos="fade-up">
+<!-- ======= About Us Section ======= -->
+<section id="about-us" class="about-us">
+  <div class="container" data-aos="fade-up">
 
-      <div class="row content">
-        <div class="col-lg-6" data-aos="fade-right">
-          <h2>Eum ipsam laborum deleniti velitena</h2>
-          <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assum perenda sruen jonee trave</h3>
-        </div>
-        <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left">
-          <p>
-            Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum
-          </p>
-          <ul>
-            <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequa</li>
-            <li><i class="ri-check-double-line"></i> Duis aute irure dolor in reprehenderit in voluptate velit</li>
-            <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in</li>
-          </ul>
-          <p class="fst-italic">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua.
-          </p>
+    <div class="row content">
+      <div class="col-lg-6" data-aos="fade-right">
+        <h2>Watch Our Recent Stream</h2>
+        <div style="width:full; ">
+          {% embed page.video_url max_width=1500 %}
         </div>
       </div>
-
+      <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left">
+        <p>
+          Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum
+        </p>
+        <ul>
+          <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequa</li>
+          <li><i class="ri-check-double-line"></i> Duis aute irure dolor in reprehenderit in voluptate velit</li>
+          <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in</li>
+        </ul>
+        <p class="fst-italic">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua.
+        </p>
+      </div>
     </div>
-  </section><!-- End About Us Section -->
+
+  </div>
+<!-- End About Us Section -->
 
   <!-- ======= Services Section ======= -->
   <section id="services" class="services section-bg">

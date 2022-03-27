@@ -11,8 +11,10 @@ from wagtail.search import index
 
 class HomePage(Page):
     body = RichTextField(blank=True)
+    video_url = models.URLField("Video URL", blank=True)
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full", help_text="This is the body of the page"),
+        FieldPanel('video_url', classname="full", help_text="This is the video url of the page"),
         InlinePanel('gallery_images', label="Gallery images", help_text="Upload images to the carousel"),
     ]
 class HomePageGalleryImage(Orderable):
