@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
+{% load static %} 
+{% block body_class %}template-homepage{% endblock %} {% block extra_css %} 
+{% endblock extra_css %} 
+{% block content %} 
+
+
+<section id="hero" style="margin-top: -10px">
+  <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner" role="listbox">     
+        {% image item.image original as hero_image %}
+          <div class="carousel-itema ctive ">
+            <img src="{{hero_image.url}}" width=1000 height=700/>
+            <div class="carousel-container">
+              <div class="carousel-content animate__animated animate__fadeInUp">
+                <h2>{{ page.image.image_title }}</h2>
+                <p>
+                  {{ page.image.caption }}
+                </p>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div>
+</section>
+  <section id="about-us" class="about-us">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row content">
+        <div class="col-lg-6" data-aos="fade-right">
+          {{ page.church_history | richtext }}
+        </div>
+        <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left">
+          {% image page.image original as inception_image %}
+          <img src="{{inception_image.url}}" class="img-fluid" alt="{{inception_image.title}}" width="700" height="500">
+        </div>
+      </div>
+
+    </div>
+
+
+{% endblock content %} 
