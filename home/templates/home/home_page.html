@@ -1,7 +1,8 @@
 {% extends "base.html" %} 
 {% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
 {% load static %} 
-{% block body_class %}template-homepage{% endblock %} {% block extra_css %} 
+{% block body_class %}template-homepage{% endblock %} 
+{% block extra_css %} 
 {% endblock extra_css %} 
 {% block content %} 
   <!-- ======= Hero Section ======= -->
@@ -10,8 +11,7 @@
       <div class="carousel-inner" role="listbox">     
         {% for item in page.gallery_images.all %}
           {% image item.image original as slide_image %}
-            <div class="carousel-item {% if forloop.first %} active {% endif %}">
-              <img src="{{slide_image.url}}" width=1920 height=1088/>
+            <div class="carousel-item {% if forloop.first %} active {% endif %}" style="background-image: url('{{slide_image.url}}');">
               <div class="carousel-container">
                 <div class="carousel-content animate__animated animate__fadeInUp">
                   <h2>{{ item.image_title }}</h2>
@@ -157,7 +157,7 @@
       </div>
 
     </div>
-  </section><!-- End Services Section -->
+  </section>
+  <!-- End Services Section -->
 
-
-{% endblock%}
+{% endblock  %}
