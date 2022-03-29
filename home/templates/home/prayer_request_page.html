@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %} 
+{% block extra_css %}
+<link href="{% static 'css/hero.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% comment %} Hero Section {% endcomment %}
+{% image page.image width-3560 as hero_image %}
+<section
+  style="margin-top: -10px; background-image: url('{{ hero_image.url }}'), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)); background-blend-mode: overlay; background-repeat: no-repeat;background-size:cover;"
+  id="heroArea" class="d-flex flex-column justify-content-end align-items-center">
+ <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
+   <div class="carousel-item active">
+     <div class="carousel-containered">
+       <h4 class="animate__animated animate__fadeInDown text-white">Book an Appointment<span> with one of the Ministry Leaders</span></h4>
+       <p class="animate__animated fanimate__adeInUp">{{ hero_image.caption }}</p>
+     </div>
+   </div>
+  </div>
+  <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+    <defs>
+      <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+    </defs>
+    <g class="wave1">
+      <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+    </g>
+    <g class="wave2">
+      <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+    </g>
+    <g class="wave3">
+      <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+    </g>
+ </svg>
+</section>
+  
+{% comment %} Contact Section {% endcomment %}
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="row mt-5 justify-content-center" data-aos="fade-up">
+        <div class="col-lg-10">
+          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+              </div>
+            </div>
+            <div class="form-group mt-3">
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+            </div>
+            <div class="form-group mt-3">
+              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+            </div>
+            <div class="my-3">
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your message has been sent. Thank you!</div>
+            </div>
+            <div class="text-center"><button type="submit">Send Message</button></div>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- End Contact Section -->
+{% endblock content %}

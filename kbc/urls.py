@@ -5,6 +5,7 @@ from django.contrib import admin
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
+from wagtail.contrib.sitemaps.views import sitemap
 
 from search import views as search_views
 
@@ -31,6 +32,7 @@ urlpatterns = urlpatterns + [
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
     path('', include('allauth.urls')),
+    path('sitemap.xml', sitemap),
     path("", include(wagtail_urls)),
 
     # Alternatively, if you want Wagtail pages to be served from a subpath

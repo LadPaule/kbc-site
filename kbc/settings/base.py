@@ -35,7 +35,7 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
-
+    'django.contrib.sitemaps',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sites',
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',

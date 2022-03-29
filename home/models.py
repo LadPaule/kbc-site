@@ -19,7 +19,6 @@ class HomePage(Page):
         InlinePanel('gallery_images', label="Carousel or Slider images", help_text="Upload images to the carousel"),
     ]
 class HomePageGalleryImage(Orderable):
-    DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
     page = ParentalKey('HomePage', on_delete=models.CASCADE, related_name='gallery_images')
     image = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
     caption = models.CharField (blank=True, max_length=800)
@@ -39,7 +38,6 @@ class InceptionPage(Page):
     ]
 
 class InceptionPageGalleryImage(Orderable):
-    DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
     page = ParentalKey('InceptionPage', on_delete=models.CASCADE, related_name='Heroimages')
     image = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
     side_image = models.ForeignKey('wagtailimages.Image', blank=True, null=True, on_delete=models.CASCADE, related_name='+')
@@ -53,11 +51,13 @@ class InceptionPageGalleryImage(Orderable):
 
 
 class ContactPage(AbstractEmailForm):
+    template="home/contact_page.html"
     intro = RichTextField(blank=True)
     thank_you_text = RichTextField(blank=True)
     content_panels = AbstractEmailForm.content_panels + [
+        InlinePanel('Heroimage', label="Hero Image", help_text="Upload images to the carousel"),
         FieldPanel('intro', classname="full", help_text="This is the intro of the Contact Page"),
-        InlinePanel('contact_page_form_fields', label="Contact Form Fields", help_text="Add Contact Form Fields"),
+        InlinePanel('form_fields', label="Contact Form Fields", help_text="Add Contact Form Fields"),
         FieldPanel('thank_you_text', classname="full", help_text="This is the appreciative text of the Contact Page"),
         MultiFieldPanel([
             FieldRowPanel([
@@ -68,10 +68,17 @@ class ContactPage(AbstractEmailForm):
         ], heading="Email Settings"),
     ]
 
-class FormField(AbstractFormField):
-    DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-    page = ParentalKey('ContactPage', on_delete=models.CASCADE, related_name='contact_page_form_fields')
+class ContactPageFormField(AbstractFormField):
+    page = ParentalKey('ContactPage', on_delete=models.CASCADE, related_name='form_fields')
 
+class ContactPageGalleryImage(Orderable):
+    page = ParentalKey('ContactPage', on_delete=models.CASCADE, related_name='Heroimage')
+    image = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
+    caption = models.CharField (blank=True, max_length=800)
+
+    panels = [ ImageChooserPanel('image'),
+        FieldPanel('caption'),
+    ]
 
 # Prayer Request Page
 class PrayerRequestPage(AbstractEmailForm):
@@ -79,8 +86,8 @@ class PrayerRequestPage(AbstractEmailForm):
     thank_you_text = RichTextField(blank=True)
     content_panels = AbstractEmailForm.content_panels + [
         FieldPanel('intro', classname="full", help_text="This is the intro of the Contact Page"),
-        InlinePanel('Heroimage', label="Carousel or Slider images", help_text="Upload images to the carousel"),
-        InlinePanel('prayer_request_page_form_fields', label="Contact Form Fields", help_text="Add Contact Form Fields"),
+        InlinePanel('Heroimage', label="Hero Image", help_text="Upload images to the carousel"),
+        InlinePanel('form_fields', label="Contact Form Fields", help_text="Add Contact Form Fields"),
         FieldPanel('thank_you_text', classname="full", help_text="This is the appreciative text of the Contact Page"),
         MultiFieldPanel([
             FieldRowPanel([
@@ -92,11 +99,9 @@ class PrayerRequestPage(AbstractEmailForm):
     ]
 
 class PrayerRequestPageFormField(AbstractFormField):
-    DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-    page = ParentalKey('PrayerRequestPage', on_delete=models.CASCADE, related_name='prayer_request_page_form_fields')
+    page = ParentalKey('PrayerRequestPage', on_delete=models.CASCADE, related_name='form_fields')
 
 class PrayerRequestPageGalleryImage(Orderable):
-    DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
     page = ParentalKey('PrayerRequestPage', on_delete=models.CASCADE, related_name='Heroimage')
     image = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
     caption = models.CharField (blank=True, max_length=800)
@@ -115,7 +120,7 @@ class AppointmentsPage(AbstractEmailForm):
     content_panels = AbstractEmailForm.content_panels + [
         FieldPanel('intro', classname="full", help_text="This is the intro of the Contact Page"),
         InlinePanel('Heroimage', label="Carousel or Slider images", help_text="Upload images to the carousel"),
-        InlinePanel('prayer_request_page_form_fields', label="Appointment Form Fields", help_text="Add Contact Form Fields"),
+        InlinePanel('form_fields', label="Appointment Form Fields", help_text="Add Contact Form Fields"),
         FieldPanel('thank_you_text', classname="full", help_text="This is the appreciative text of the Contact Page"),
         MultiFieldPanel([
             FieldRowPanel([
@@ -126,8 +131,7 @@ class AppointmentsPage(AbstractEmailForm):
         ], heading="Email Settings"),
     ]
 class AppointmentsPageFormField(AbstractFormField):
-    DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-    page = ParentalKey('AppointmentsPage', on_delete=models.CASCADE, related_name='prayer_request_page_form_fields')
+    page = ParentalKey('AppointmentsPage', on_delete=models.CASCADE, related_name='form_fields')
 
 class AppointmentsPageGalleryImage(Orderable):
     page = ParentalKey('AppointmentsPage', on_delete=models.CASCADE, related_name='Heroimage')
@@ -140,3 +144,45 @@ class AppointmentsPageGalleryImage(Orderable):
         FieldPanel('image_title'),
     ]
 
+# Statement of Faith
+class StatementOfFaithPage(Page):
+    intro = RichTextField(blank=True)
+    statement_body = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+        InlinePanel('Heroimage', label="Banner Image", help_text="Upload images to the banner area of the Page "),
+        FieldPanel('intro', classname="full", help_text="This is the intro of the Page"),
+        FieldPanel('statement_body', classname="full", help_text="This is the body of the Page"),
+    ]
+
+class StatementOffaithImage(Orderable):
+    page = ParentalKey('StatementOfFaithPage', on_delete=models.CASCADE, related_name='Heroimage')
+    image = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
+    caption = models.CharField (blank=True, max_length=800)
+    panels = [ ImageChooserPanel('image'),
+        FieldPanel('caption'),
+    ]   
+
+# convenant page
+class ConvenantPage(Page):
+    intro = RichTextField(blank=True)
+    convenant_body = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+        InlinePanel('Heroimage', label="Banner Image", help_text="Upload images to the banner area of the Page "),
+        FieldPanel('intro', classname="full", help_text="This is the intro of the Page"),
+        FieldPanel('convenant_body', classname="full", help_text="This is the body of the Page"),
+    ]
+
+
+class ConvenantPageImage(Orderable):
+    page = ParentalKey('ConvenantPage', on_delete=models.CASCADE, related_name='Heroimage')
+    image = models.ForeignKey('wagtailimages.image', on_delete=models.CASCADE, related_name="+")
+    caption = models.CharField(blank=True, max_length=700)
+    panels = [ ImageChooserPanel('image'),
+        FieldPanel('caption'),
+    ] 
+
+# Ministries
+
+# Leadership
+
+# Give Page
