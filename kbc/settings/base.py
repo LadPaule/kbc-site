@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'kbc',
     'blog',
     'admindashboard',
+    'crispy_forms',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -43,10 +44,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'captcha',
+    'wagtailcaptcha',
 ]
 
 SITE_ID = 1
+
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -198,3 +205,9 @@ WAGTAILSEARCH_BACKENDS = {
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+# Recaptcha settins
+
+RECAPTCHA_PUBLIC_KEY='6Lfq8TQfAAAAAMlLAFH0D6kFFLCb4zCqcTqcsYzN'
+RECAPTCHA_SECRET_KEY='6Lfq8TQfAAAAAOX154JRXbjiygB_NbNuYt6fiHKX'
+NOCAPTCHA=True
