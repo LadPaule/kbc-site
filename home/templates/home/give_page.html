@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
+{% block extra_css %}
+<link href="{% static 'css/give.css' %}" rel="stylesheet">
+
+{% endblock extra_css %}
+{% block body_class %}template-homepage{% endblock %} 
+{% block content %} 
+
+
+  <section id="team" class="pb-5">
+    <div class="container">
+        <div class="section-title" data-aos="zoom-out">
+            {{ page.intro |richtext }}
+          </div>
+        <section id="contact" class="contact" style="margin-top: -8rem; ">
+            <div class="container">
+              <div class="row justify-content-center" data-aos="fade-up">
+                <div class="col-lg-10">
+                  <div class="info-wrap">
+                    <div class="row">
+                      <div class="col-lg-4 info">
+                        <i class="bi bi-phone"></i>
+                        <h4>Airtel Money:</h4> 
+                        <p>0706382329 <br /> Ann Nambogo <br />(Account Bearer)</p>
+                      </div>
+  
+                      <div class="col-lg-4 info mt-4 mt-lg-0">
+                        <i class="bi bi-phone"></i>
+                        <h4>MTN MoMo:</h4>
+                        <p>0783423973 <br /> Ann Nambogo <br />(Account Bearer)</p>
+                      </div>
+        
+                      <div class="col-lg-4 info mt-4 mt-lg-0">
+                        <i class="bi bi-envelope"></i>
+                        <h4>Bank:</h4>
+                        <p>ABSA Bank Uganda Limited</p>
+                        <p>
+                          Account Name: Kampala Baptist Church <br />Account Number: 0341212731
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+ 
+        <div class="row" style="margin-top: 2rem;">
+            {% for item in page.card_information.all %}
+                {% image item.card_image original as img %}
+            <!-- Team member -->
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="image-flip" >
+                    <div class="mainflip flip-0">
+                        <div class="frontside">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p><img class=" img-fluid" src="{{img.url}}" alt="card image"></p>
+                                    <h4 class="card-title">{{ item.card_title }}</h4>
+                                    <p class="card-text"> {{ item.card_text }}</p>
+                                    <a href="{% static 'assets/img/features-1.jpg' %}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="backside">
+                            <div class="card">
+                                <div class="card-body text-center mt-4">
+                                    <h4 class="card-title">{{ item.card_title }}</h4>
+                                    <p class="card-text">{{ item.card_back_side }}</p>
+                                    {% comment %} <ul class="list-inline">
+                                        <a target="_blank" class="btn btn-outline-info" href="https://flutterwave.com/pay/rz9ljvrl5eff" >Give</a>
+                                    </ul> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+    </section>
+</section>
+
+{% endblock content  %}

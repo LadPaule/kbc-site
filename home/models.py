@@ -143,3 +143,21 @@ class ConvenantPageImage(Orderable):
 # Leadership
 
 # Give Page
+class GivePage(Page):
+    intro = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+        FieldPanel('intro', classname="full", help_text="This is the intro of the Page"),
+        InlinePanel('card_information', label="card Information", help_text="Upload images to the give give card"),
+    ]
+
+class GivePageGalleryImage(Orderable):
+    page = ParentalKey('GivePage', on_delete=models.CASCADE, related_name='card_information')
+    card_image = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
+    card_title= models.CharField(blank=True, max_length=250)
+    card_text = models.CharField (blank=True, max_length=2200)
+    card_back_side = models.CharField (blank=True, max_length=2200)
+    panels = [ ImageChooserPanel('card_image'),
+        FieldPanel('card_title'),
+        FieldPanel('card_text'),
+        FieldPanel('card_back_side'),
+    ]
