@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
+    'wagtailmedia',
 
     'allauth',
     'allauth.account',
