@@ -1,0 +1,39 @@
+{% extends "base.html" %} 
+{% load static wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
+{% block body_class %}template-homepage{% endblock %} 
+{% block extra_css %} 
+{% endblock extra_css %} 
+{% block content %}
+<!-- ======= Our Team Section ======= -->
+<section id="team" class="team section-bg">
+   <div class="container">
+
+     <div class="section-title" data-aos="fade-up">
+       <h2>KBC <strong>Elder&apos;s Board</strong></h2>
+       {{ page.intro|richtext }}
+     </div>
+
+     <div class="row">
+      {% for profile in page.profile_image.all %}
+        {% image profile.photograph original as img %}
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+          <div class="member" data-aos="fade-up">
+            <div class="member-img">
+              <img src="{{ img.url }}" class="img-fluid" alt="">
+               <div class="social">
+                 <a href="{{ profile.twitter }}"><i class="bi bi-twitter"></i></a>
+                 <a href="{{ profile.facebook }}"><i class="bi bi-facebook"></i></a>
+                 <a href="{{ profile.linkedIn }}"><i class="bi bi-linkedin"></i></a>
+               </div>
+            </div>
+            <div class="member-info">
+              <h4>{{ profile.elders_name }}</h4>
+              <span>{{ profile.designation }}</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section><!-- End Our Team Section -->
+
+{% endblock %}

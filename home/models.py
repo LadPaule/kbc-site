@@ -31,19 +31,24 @@ class HomePageGalleryImage(Orderable):
 
 class InceptionPage(Page):
     church_history = RichTextField(blank=True)
+    more_history = RichTextField(blank=True)
+    church_philosophy = RichTextField(blank=True)
+    membership = RichTextField(blank=True)
     content_panels = Page.content_panels + [
-        InlinePanel('Heroimages', label="Hero Image", help_text="Upload images to the hero Section/ kbc website banner"),
         FieldPanel('church_history', classname="full", help_text="This is the body of the page"),
-        InlinePanel('Heroimages', label="Side Image", help_text="Upload images to the hero Section/ kbc website banner"),
+        InlinePanel('side_image', label="Side Image", help_text="Upload images to the hero Section/ kbc website banner"),
+        FieldPanel('more_history', classname="full", help_text="This is more history of the page"),
+        FieldPanel('church_philosophy', classname="full", help_text="This is where the church philosophy is"),
+        FieldPanel('membership', classname="full", help_text="This is where the membership detail is contained"),
     ]
 
 class InceptionPageGalleryImage(Orderable):
-    page = ParentalKey('InceptionPage', on_delete=models.CASCADE, related_name='Heroimages')
+    page = ParentalKey('InceptionPage', on_delete=models.CASCADE, related_name='side_image')
     image = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
-    side_image = models.ForeignKey('wagtailimages.Image', blank=True, null=True, on_delete=models.CASCADE, related_name='+')
     caption = models.CharField (blank=True, max_length=800)
     image_title= models.CharField(blank=True, max_length=250)
-    panels = [ ImageChooserPanel('image'),
+    panels = [ 
+        ImageChooserPanel('image'),
         FieldPanel('caption'),
         FieldPanel('image_title'),
     ]
@@ -161,3 +166,61 @@ class GivePageGalleryImage(Orderable):
         FieldPanel('card_text'),
         FieldPanel('card_back_side'),
     ]
+
+
+# Gallery Page
+#Elders Board Page
+class EldersBoardPage(Page):
+    intro = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+    FieldPanel('intro', classname="full", help_text="This is the body of the page"),
+    InlinePanel('profile_image', label="Individual Photo files", help_text="Upload Photos of the elders"),
+    ]
+class EldersBoardPageGalleryImage(Orderable):
+    page = ParentalKey('EldersBoardPage', on_delete=models.CASCADE, related_name='profile_image')
+    photograph = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
+    designation = models.CharField (blank=True, max_length=800)
+    elders_name= models.CharField(blank=True, max_length=250)
+    panels = [ ImageChooserPanel('photograph'),
+        FieldPanel('designation'),
+        FieldPanel('elders_name'),
+    ]
+
+class PastoratePage(Page):
+    intro = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+    FieldPanel('intro', classname="full", help_text="This is the body of the profile"),
+    InlinePanel('profile_image', label="Individual Photo files", help_text="Upload Photos of the pastors"),
+    ]
+class PastoratePageGalleryImage(Orderable):
+    page = ParentalKey('PastoratePage', on_delete=models.CASCADE, related_name='profile_image')
+    photograph = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
+    story = RichTextField(blank=True)
+    elders_name= models.CharField(blank=True, max_length=250)
+    panels = [ ImageChooserPanel('photograph'),
+        FieldPanel('story'),
+        FieldPanel('elders_name'),
+    ]
+
+class StaffPage(Page):
+    intro = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+    FieldPanel('intro', classname="full", help_text="This is the body of the page"),
+    InlinePanel('profile_image', label="Individual Photo files", help_text="Upload Photos of the elders"),
+    ]
+class StaffPageGalleryImage(Orderable):
+    page = ParentalKey('StaffPage', on_delete=models.CASCADE, related_name='profile_image')
+    photograph = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
+    designation = models.CharField (blank=True, max_length=800)
+    staff_name = models.CharField(blank=True, max_length=250)
+    twitter = models.URLField(blank=True)
+    facebook = models.URLField(blank=True)
+    linkedIn = models.URLField(blank=True)
+    panels = [ ImageChooserPanel('photograph'),
+        FieldPanel('designation'),
+        FieldPanel('staff_name'),
+        FieldPanel('twitter'),
+        FieldPanel('facebook'),
+        FieldPanel('linkedIn'),
+    ]  
+

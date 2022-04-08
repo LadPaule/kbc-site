@@ -18,9 +18,12 @@ INSTALLED_APPS = [
     'admindashboard',
     'crispy_forms',
 
+    'bootstrapform',
+
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
+    'wagtail_gallery',
     'wagtail.sites',
     'wagtail.users',
     'wagtail.snippets',
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     'django.contrib.sitemaps',
+    'django_social_share',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sites',

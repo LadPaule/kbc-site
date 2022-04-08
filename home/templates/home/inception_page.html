@@ -1,44 +1,65 @@
 {% extends 'base.html' %}
 {% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
 {% load static %} 
-{% block body_class %}template-homepage{% endblock %} {% block extra_css %} 
+{% block body_class %}template-homepage{% endblock %} 
+{% block extra_css %}
+<link href="{% static 'css/hero.css' %}" rel="stylesheet">
 {% endblock extra_css %} 
 {% block content %} 
-
-
-<section id="hero" style="margin-top: -10px">
-  <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
-    <div class="carousel-inner" role="listbox">     
-        {% image item.image original as hero_image %}
-          <div class="carousel-itema ctive ">
-            <img src="{{hero_image.url}}" width=1000 height=700/>
-            <div class="carousel-container">
-              <div class="carousel-content animate__animated animate__fadeInUp">
-                <h2>{{ page.image.image_title }}</h2>
-                <p>
-                  {{ page.image.caption }}
-                </p>
-              </div>
-            </div>
-          </div>
+  <section
+    style="margin-top: -10px; background-image: url('{% static 'images/history.jpg' %}'), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)); background-blend-mode: overlay; background-repeat: no-repeat;background-size:cover;"
+    id="heroArea" class="d-flex flex-column justify-content-end align-items-center">
+   <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
+     <div class="carousel-item active">
+       <div class="carousel-containered">
+         <h4 class="animate__animated animate__fadeInDown text-white">OUR <span>History</span></h4>
+         <p class="animate__animated fanimate__adeInUp">{{ hero_image.caption }}</p>
+       </div>
+     </div>
     </div>
-  </div>
-</section>
+    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+      <defs>
+        <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+      </defs>
+      <g class="wave1">
+        <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+      </g>
+      <g class="wave2">
+        <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+      </g>
+      <g class="wave3">
+        <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+      </g>
+   </svg>
+
+  </section>
 </section>
   <section id="about-us" class="about-us">
     <div class="container" data-aos="fade-up">
-
       <div class="row content">
         <div class="col-lg-6" data-aos="fade-right">
-          {{ page.church_history | richtext }}
+          {{ page.church_history|richtext }}
         </div>
         <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left">
-          {% image page.image original as inception_image %}
-          <img src="{{inception_image.url}}" class="img-fluid" alt="{{inception_image.title}}" width="700" height="500">
+          {% for item in page.side_image.all %}
+          {% image item.image original as img %}
+            <img src="{{ img.url }}" class="img-fluid" alt="{{ img.title }}" width="700" height="500">
+          {% endfor %}
         </div>
+      </div>
+      <div style="padding-top: 15px;" data-aos="fade-up">
+        {{ page.more_history|richtext }}
+      </div>
+      <div class="row content">
+      <div class="col-lg-6" data-aos="fade-right">
+        {{ page.church_philosophy|richtext }}
+      </div>
+      <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left">
+        {{ page.membership|richtext}}
+      </div>
       </div>
     </div>
 </section>
 
 
-    {% endblock content %} 
+{% endblock content %} 
