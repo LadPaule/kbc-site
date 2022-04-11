@@ -2,7 +2,43 @@
 {% load static wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
 {% block body_class %}template-homepage{% endblock %} 
 {% block extra_css %} 
+<link href="{% static 'css/hero.css' %}" rel="stylesheet">
 {% endblock extra_css %} 
 {% block content %}
+
+<section
+  style="margin-top: -10px; background-image: url('{% static 'images/statement.jpeg' %}'), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)); background-blend-mode: overlay; background-repeat: no-repeat;background-size:cover;"
+  id="heroArea" class="d-flex flex-column justify-content-end align-items-center">
+  <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
+    <div class="carousel-item active">
+      <div class="carousel-containered">
+        <h4 class="animate__animated animate__fadeInDown text-white">We Love <span>Getting FeedBack</span></h4>
+        <p class="animate__animated fanimate__adeInUp">{{ hero_image.caption }}</p>
+      </div>
+    </div>
+   </div>
+  <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+    <defs>
+      <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+    </defs>
+    <g class="wave1">
+      <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+    </g>
+    <g class="wave2">
+      <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+    </g>
+    <g class="wave3">
+      <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+    </g>
+  </svg>
+
+</section>
+<section id="about-us" class="about-us">
+  <div class="container">
+  <div data-aos="fade-up" style="margin: 20px">
+    {{ page.statement_body|richtext }}
+  </div>
+  </div>
+</section>
 
 {% endblock %}

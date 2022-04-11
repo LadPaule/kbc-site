@@ -117,33 +117,35 @@ class AppointmentsPageFormField(AbstractFormField):
 
 # Statement of Faith
 class StatementOfFaithPage(Page):
-    intro = RichTextField(blank=True)
     statement_body = RichTextField(blank=True)
     content_panels = Page.content_panels + [
-        FieldPanel('intro', classname="full", help_text="This is the intro of the Page"),
-        FieldPanel('statement_body', classname="full", help_text="This is the body of the Page"),
+       FieldPanel('statement_body', classname="full", help_text="This is the body of the Page"),
     ]
-
-  
 
 # convenant page
 class ConvenantPage(Page):
-    intro = RichTextField(blank=True)
     convenant_body = RichTextField(blank=True)
     content_panels = Page.content_panels + [
-        InlinePanel('Heroimage', label="Banner Image", help_text="Upload images to the banner area of the Page "),
-        FieldPanel('intro', classname="full", help_text="This is the intro of the Page"),
         FieldPanel('convenant_body', classname="full", help_text="This is the body of the Page"),
     ]
-class ConvenantPageImage(Orderable):
-    page = ParentalKey('ConvenantPage', on_delete=models.CASCADE, related_name='Heroimage')
-    image = models.ForeignKey('wagtailimages.image', on_delete=models.CASCADE, related_name="+")
-    caption = models.CharField(blank=True, max_length=700)
-    panels = [ ImageChooserPanel('image'),
-        FieldPanel('caption'),
-    ] 
-
 # Ministries
+class ChildrenPage(Page):
+    about_body = RichTextField(blank=True)
+    video = models.URLField("Video URL", blank=True)
+    content_panels = Page.content_panels + [
+        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        FieldPanel('video', classname="full", help_text="This is the video url of the children ministry page"),
+        InlinePanel('children_ministry_faqs', label="Frequently asked questions about the children ministry", help_text="Upload images to the carousel"),
+    
+    ]  
+class ChildrenPageFaqs(Orderable):
+    page = ParentalKey('ChildrenPage', related_name='children_ministry_faqs')
+    question = models.CharField(max_length=800, blank=True)
+    answer = models.CharField (blank=True, max_length=800)
+    panels = [
+        FieldPanel('question'),
+        FieldPanel('answer'),
+    ]  
 
 # Leadership
 
