@@ -68,10 +68,9 @@
           <form action="{% pageurl page %}" method="POST" role="form" class="php-email-form">
             {% csrf_token %}
             {{ form|bootstrap }}
-            <input type="submit">
-            {% comment %} <div class="text-center">
+            <div class="text-center">
                 <button type="submit">Send Message</button>
-            </div> {% endcomment %}
+            </div>
           </form>
         </div>
 

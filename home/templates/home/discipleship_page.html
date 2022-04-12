@@ -2,7 +2,96 @@
 {% load static wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
 {% block body_class %}template-homepage{% endblock %} 
 {% block extra_css %} 
+<link href="{% static 'css/hero.css' %}" rel="stylesheet">
+<link href="{% static 'css/ie6.css' %}" rel="stylesheet">
 {% endblock extra_css %} 
+
 {% block content %}
+<section
+  style="margin-top: -10px; background-image: url('{% static 'images/kids.webp' %}'), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)); background-repeat: no-repeat;background-size:cover;"
+  id="heroArea" class="d-flex flex-column justify-content-end align-items-center">
+ <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
+   <div class="carousel-item active">
+     <div class="carousel-containered">
+       <h4 class="animate__animated animate__fadeInDown text-white">  <span> </span></h4>
+       <p class="animate__animated fanimate__adeInUp">{{ hero_image.caption }}</p>
+     </div>
+   </div>
+   <div class="carousel-containered">
+    <h4 class="animate__animated animate__fadeInDown text-white">  <span> </span></h4>
+    <p class="animate__animated fanimate__adeInUp">{{ hero_image.caption }}</p>
+  </div>
+  </div>
+  <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+    <defs>
+      <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+    </defs>
+    <g class="wave1">
+      <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+    </g>
+    <g class="wave2">
+      <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+    </g>
+    <g class="wave3">
+      <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+    </g>
+ </svg>
+</section>
+
+<!-- ======= About Us Section ======= -->
+<section id="about-us" class="about-us">
+  <div class="container" data-aos="fade-up">
+
+    <div class="row content">
+      <div class="col-lg-6" data-aos="fade-right">
+        <h2>Watch Our Recent Stream</h2>
+        <div style="width: full">
+          <iframe src="{% embed page.video max_width=1500 %}" width="100%" height="300" style="border:1px solid black;">
+          </iframe>
+          
+        </div>
+      </div>
+      <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left">
+        <p>
+          The church runs a highly functional and successful children&apos;s ministry.
+          At KBC we want Sunday to be the best day of the week for everyone, especially our children! We have a special place for your child on Sundays.culpa qui officia deserunt mollit anim id est laborum
+        </p>
+        <ul>
+          <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequa</li>
+          <li><i class="ri-check-double-line"></i> Duis aute irure dolor in reprehenderit in voluptate velit</li>
+          <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in</li>
+        </ul>
+        <p class="fst-italic">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End About Us Section -->
+<!-- ======= Frequently Asked Questions Section ======= -->
+<section id="faq" class="faq section-bg">
+  <div class="container" data-aos="fade-up">
+    <div class="section-title">
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <ul>
+        {% for faq in page.children_ministry_faqs.all %}
+        <li data-aos="fade-up">
+          <i class="bx bx-help-circle icon-help"></i> 
+            <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">{{ faq.question }} <i class="bx bx-chevron-down icon-show"></i>
+              <i class="bx bx-chevron-up icon-close"></i></a>
+          <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+            <p>{{ faq.answer }} </p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
 
 {% endblock %}

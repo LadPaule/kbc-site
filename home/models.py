@@ -1,5 +1,4 @@
 from django.db import models
-
 from wagtail.core.models import Page, Orderable
 from modelcluster.fields import ParentalKey
 from wagtail.core.fields import RichTextField
@@ -13,6 +12,7 @@ from wagtailcaptcha.models import WagtailCaptchaEmailForm
 
 class HomePage(Page):
     body = RichTextField(blank=True)
+    weekly_activities = RichTextField(blank=True)
     video_url = models.URLField("Video URL", blank=True)
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full", help_text="This is the body of the page"),
@@ -55,7 +55,6 @@ class InceptionPageGalleryImage(Orderable):
 
 
 class ContactPage(WagtailCaptchaEmailForm):
-    template="home/contact_page.html"
     intro = RichTextField(blank=True)
     thank_you_text = RichTextField(blank=True)
     content_panels = AbstractEmailForm.content_panels + [
@@ -147,7 +146,78 @@ class ChildrenPageFaqs(Orderable):
         FieldPanel('answer'),
     ]  
 
-# Leadership
+class AdultsPage(Page):
+    about_body = RichTextField(blank=True)
+    video = models.URLField("Video URL", blank=True)
+    content_panels = Page.content_panels + [
+        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        FieldPanel('video', classname="full", help_text="This is the video url of the children ministry page"),
+        InlinePanel('adult_ministry_faqs', label="Frequently asked questions about the KBC Adults ministry", help_text="Upload images to the carousel"),
+    
+    ]
+class AdultsPageFaqs(Orderable):
+    page = ParentalKey('AdultsPage', related_name='adult_ministry_faqs')
+    question = models.CharField(max_length=800, blank=True)
+    answer = models.CharField (blank=True, max_length=800)
+    panels = [
+        FieldPanel('question'),
+        FieldPanel('answer'),
+    ]  
+
+class YouthPage(Page):
+    about_body = RichTextField(blank=True)
+    video = models.URLField("Video URL", blank=True)
+    content_panels = Page.content_panels + [
+         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        FieldPanel('video', classname="full", help_text="This is the video url of the children ministry page"),
+        InlinePanel('youth_ministry_faqs', label="Frequently asked questions about the KBC Youth ministry", help_text="Upload images to the carousel"),
+    
+    ]
+
+class YouthPageFaqs(Orderable):
+    page = ParentalKey('YouthPage', related_name='youth_ministry_faqs')
+    question = models.CharField(max_length=800, blank=True)
+    answer = models.CharField (blank=True, max_length=800)
+    panels = [
+        FieldPanel('question'),
+        FieldPanel('answer'),
+    ]
+
+class WorshipPage(Page):
+    about_body = RichTextField(blank=True)
+    video = models.URLField("Video URL", blank=True)
+    content_panels = Page.content_panels + [
+        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        FieldPanel('video', classname="full", help_text="This is the video url of the children ministry page"),
+        InlinePanel('worship_ministry_faqs', label="Frequently asked questions about the KBC Worship ministry", help_text="Upload images to the carousel"),
+    
+    ]
+class WorshipPageFaqs(Orderable):
+    page = ParentalKey('WorshipPage', related_name='worship_ministry_faqs')
+    question = models.CharField(max_length=800, blank=True)
+    answer = models.CharField (blank=True, max_length=800)
+    panels = [
+        FieldPanel('question'),
+        FieldPanel('answer'),
+    ]  
+class DiscipleshipPage(Page):
+    about_body = RichTextField(blank=True)
+    video = models.URLField("Video URL", blank=True)
+    content_panels = Page.content_panels + [
+        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        FieldPanel('video', classname="full", help_text="This is the video url of the children ministry page"),
+        InlinePanel('Discipleship_ministry_faqs', label="Frequently asked questions about the KBC Discipleship ministry", help_text="Upload images to the carousel"),
+    
+    ]
+class DiscipleshipPageFaqs(Orderable):
+    page = ParentalKey('DiscipleshipPage', related_name='Discipleship_ministry_faqs')
+    question = models.CharField(max_length=800, blank=True)
+    answer = models.CharField (blank=True, max_length=800)
+    panels = [
+        FieldPanel('question'),
+        FieldPanel('answer'),
+    ]  
+
 
 # Give Page
 class GivePage(Page):
