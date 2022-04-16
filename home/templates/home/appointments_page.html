@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static crispy_forms_tags wagtailcore_tags wagtailimages_tags %} 
+{% load static crispy_forms_tags bootstrap wagtailcore_tags wagtailimages_tags %} 
 {% block extra_css %}
 <link href="{% static 'css/hero.css' %}" rel="stylesheet">
 {% endblock %}
@@ -41,7 +41,7 @@
         <div class="col-lg-10">
           <form action="forms/contact.php" method="post" role="form" class="php-email-form">
             {% csrf_token %}
-            {{ form|crispy }}
+            {{ form|bootstrap }}
             <div class="text-center"><button type="submit">Send Message</button></div>
           </form>
         </div>
