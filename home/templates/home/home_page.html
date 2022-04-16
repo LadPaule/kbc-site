@@ -152,6 +152,20 @@
             <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
           </div>
         </div>
+          {% for ministry in page.ministries.all %}
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="300">
+              <div class="icon-box iconbox-teal">
+                <div class="iconic">
+                  {% image ministry.image original as img %}
+                  <img src="{{ img.url }}" alt="{{ ministry.title }}">
+                  <i class="bx bx-arch"></i>
+                </div>
+                <h4><a href="{{ ministry.ministry_link }}">{{ ministry.ministry_title }}</a></h4>
+                <p>{{ ministry.short_description }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
 
       </div>
 

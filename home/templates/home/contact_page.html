@@ -65,15 +65,17 @@
 
       <div class="row mt-5 justify-content-center" data-aos="fade-up">
         <div class="col-lg-10">
-          <form action="{% pageurl page %}" method="POST" role="form" class="php-email-form">
-            {% csrf_token %}
-            {{ form|bootstrap }}
-            <div class="text-center">
-                <button type="submit">Send Message</button>
-            </div>
-          </form>
+          {% for block in page.body %}
+            {% include_block block %}
+          {% endfor %}
         </div>
-
+        {% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+              {% endfor %}
+          </ul>
+        {% endif %}
       </div>
 
     </div>

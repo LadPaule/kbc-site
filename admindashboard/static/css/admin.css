@@ -50,3 +50,10 @@ header {
   font-size: medium;
   font-weight: 400;
 }
+.nav-wrapper .inner{
+  background: #10001dd7 !important;
+  color: #fff !important;
+}
+.c-explorer__header{
+  color: #0c0016 !important;
+}

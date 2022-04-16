@@ -1,13 +1,15 @@
+from email.policy import default
 from django.db import models
+from wagtail.core import blocks
+from wagtailstreamforms.blocks import WagtailFormBlock
 from wagtail.core.models import Page, Orderable
 from modelcluster.fields import ParentalKey
-from wagtail.core.fields import RichTextField
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, FieldRowPanel
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, FieldRowPanel, StreamFieldPanel
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtailcaptcha.models import WagtailCaptchaEmailForm
-
 
 
 class HomePage(Page):
@@ -18,6 +20,7 @@ class HomePage(Page):
         FieldPanel('body', classname="full", help_text="This is the body of the page"),
         FieldPanel('video_url', classname="full", help_text="This is the video url of the page"),
         InlinePanel('gallery_images', label="Carousel or Slider images", help_text="Upload images to the carousel"),
+        InlinePanel('ministries', label="ministry Cards", help_text="Edit the ministries&apos; cards"),
     ]
 class HomePageGalleryImage(Orderable):
     page = ParentalKey('HomePage', on_delete=models.CASCADE, related_name='gallery_images')
@@ -27,6 +30,21 @@ class HomePageGalleryImage(Orderable):
     panels = [ ImageChooserPanel('image'),
         FieldPanel('caption'),
         FieldPanel('image_title'),
+    ]
+
+class HomePageMinistry(Orderable):
+    page = ParentalKey('HomePage', on_delete=models.CASCADE, related_name='ministries')
+    ministry_title = models.CharField(blank=True, max_length=250)
+    short_description = models.CharField(blank=True, max_length=2000)
+    icon_class = models.CharField(blank=True, max_length=250)
+    ministry_link = models.CharField(blank=True, max_length=100)
+    image = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
+    panels = [
+        FieldPanel('ministry_title'),
+        FieldPanel('short_description'),
+        FieldPanel('icon_class'),
+        FieldPanel('ministry_link'),
+        ImageChooserPanel('image'),
     ]
 
 class InceptionPage(Page):
@@ -53,26 +71,24 @@ class InceptionPageGalleryImage(Orderable):
         FieldPanel('image_title'),
     ]
 
-
-class ContactPage(WagtailCaptchaEmailForm):
+class ContactPage(AbstractEmailForm):
     intro = RichTextField(blank=True)
-    thank_you_text = RichTextField(blank=True)
+    thank_you_text=RichTextField(blank=True)
     content_panels = AbstractEmailForm.content_panels + [
-        FieldPanel('intro', classname="full", help_text="This is the intro of the Contact Page"),
-        InlinePanel('form_fields', label="Contact Form Fields", help_text="Add Contact Form Fields"),
-        FieldPanel('thank_you_text', classname="full", help_text="This is the appreciative text of the Contact Page"),
+        FieldPanel('intro', help_text="This is the body of the page"),
+        InlinePanel('form_fields', label="Form Fields"),
+        FieldPanel('thank_you_text'),
         MultiFieldPanel([
             FieldRowPanel([
                 FieldPanel('from_address', classname="col6"),
                 FieldPanel('to_address', classname="col6"),
             ]),
             FieldPanel('subject'),
-        ], heading="Email Settings"),
+        ], heading="Email Settings")  
     ]
 
 class ContactPageFormField(AbstractFormField):
-    page = ParentalKey('ContactPage', on_delete=models.CASCADE, related_name='form_fields')
-
+    page = ParentalKey(ContactPage, on_delete=models.CASCADE, related_name='form_fields')
 # Prayer Request Page
 class PrayerRequestPage(WagtailCaptchaEmailForm):
     intro = RichTextField(blank=True)

@@ -9,7 +9,6 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'home',
     'search',
@@ -17,6 +16,7 @@ INSTALLED_APPS = [
     'blog',
     'admindashboard',
     'crispy_forms',
+    'streams',
 
     'bootstrapform',
 
@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     'wagtail.contrib.redirects',
     'wagtail.contrib.typed_table_block',
     'wagtail.embeds',
+    'wagtail.contrib.modeladmin',
+    'wagtailstreamforms',
     'wagtail_gallery',
     'wagtail.sites',
     'wagtail.users',
@@ -55,11 +57,22 @@ INSTALLED_APPS = [
     'wagtailcaptcha',
 ]
 
+RECAPTCHA_PUBLIC_KEY = '6Lfq8TQfAAAAAMlLAFH0D6kFFLCb4zCqcTqcsYzN'
+RECAPTCHA_PRIVATE_KEY = '6Lfq8TQfAAAAAOX154JRXbjiygB_NbNuYt6fiHKX'
+
 SITE_ID = 1
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+WAGTAILEMBEDS_RESPONSIVE_HTML = True
+
+WAGTAILSTREAMFORMS_FORM_TEMPLATES = (
+    ('streams/form_block.html', 'Default Form Template'),  # default
+    ('streams/custom_form_template.html', 'Custom Form Template'),
+    ('streams/contact_form.html', 'Contact Form Template'),
+)
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -75,6 +88,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'kbc.urls'
 
+WAGTAILMEDIA = {
+    "AUDIO_EXTENSIONS": [ "aac", "aiff", "flac", "m4a", "m4b", "mp3", "ogg", "wav"],  # list of extensions
+    "VIDEO_EXTENSIONS": ["avi", "h264", "m4v", "mkv", "mov", "mp4", "mpeg", "mpg", "ogv", "webm"],  # list of extensions
+}
 
 TEMPLATES = [
     {
@@ -214,6 +231,3 @@ BASE_URL = 'http://example.com'
 
 # Recaptcha settins
 
-RECAPTCHA_PUBLIC_KEY='6Lfq8TQfAAAAAMlLAFH0D6kFFLCb4zCqcTqcsYzN'
-RECAPTCHA_SECRET_KEY='6Lfq8TQfAAAAAOX154JRXbjiygB_NbNuYt6fiHKX'
-NOCAPTCHA=True
