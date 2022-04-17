@@ -68,8 +68,6 @@
           <form action="{% pageurl page %}" method="POST" role="form" class="php-email-form">
             {% csrf_token %}
             {{ form|crispy }}
-
-            <input type="submit" />
             <div class="text-center">
               <button type="submit">Send Message</button>
             </div>

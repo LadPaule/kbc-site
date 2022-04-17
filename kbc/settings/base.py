@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'wagtail.contrib.typed_table_block',
     'wagtail.embeds',
     'wagtail.contrib.modeladmin',
-    'wagtailstreamforms',
     'wagtail_gallery',
     'wagtail.sites',
     'wagtail.users',
@@ -68,11 +67,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
 
-WAGTAILSTREAMFORMS_FORM_TEMPLATES = (
-    ('streams/form_block.html', 'Default Form Template'),  # default
-    ('streams/custom_form_template.html', 'Custom Form Template'),
-    ('streams/contact_form.html', 'Contact Form Template'),
-)
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -1,7 +1,6 @@
 from email.policy import default
 from django.db import models
 from wagtail.core import blocks
-from wagtailstreamforms.blocks import WagtailFormBlock
 from wagtail.core.models import Page, Orderable
 from modelcluster.fields import ParentalKey
 from wagtail.core.fields import RichTextField, StreamField

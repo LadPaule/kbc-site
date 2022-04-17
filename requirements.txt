@@ -7,7 +7,6 @@ cffi==1.15.0
 charset-normalizer==2.0.12
 cryptography==36.0.2
 defusedxml==0.7.1
-wagtailstreamforms==3.17
 Django>=3.2.12
 django-allauth<=0.50.0
 django-crispy-forms>=1.14.0
@@ -39,7 +38,7 @@ sqlparse==0.4.2
 tablib==3.2.0
 telepath==0.2
 urllib3==1.26.9
-wagtail>=2.16.1
+wagtail==2.16.2
 wagtail-django-recaptcha==1.0
 wagtail-gallery==0.1.1
 wagtailmedia==0.9.0

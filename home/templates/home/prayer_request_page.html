@@ -38,7 +38,8 @@
     <div class="container">
       <div class="row mt-5 justify-content-center" data-aos="fade-up">
         <div class="col-lg-10">
-          <form action="submit" method="post" role="form" class="php-email-form">
+          <form action="{% pageurl page %}" method="POST" role="form" class="php-email-form">
+            {% csrf_token %}
             {{ form|bootstrap }}
             <div class="text-center">
               <button type="submit">Send Message</button>
