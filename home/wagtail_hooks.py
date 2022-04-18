@@ -66,3 +66,13 @@ def register_centertext_feature(features):
 
   # This is the default rule for all features
   features.default_features.append(feature_name)
+
+@hooks.register('bootstrap_after_html_document_ready')
+def add_custom_css():
+  return """
+  <style>
+    .d-block {
+      display: block;
+    }
+  </style>
+  """

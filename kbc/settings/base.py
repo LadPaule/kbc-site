@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     'django.contrib.sitemaps',
+    'django_comments_xtd',
+    'django_comments',
     'django_social_share',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -56,6 +58,10 @@ INSTALLED_APPS = [
     'wagtailcaptcha',
 ]
 
+
+COMMENTS_APP = 'django_comments_xtd'
+
+
 RECAPTCHA_PUBLIC_KEY = '6Lfq8TQfAAAAAMlLAFH0D6kFFLCb4zCqcTqcsYzN'
 RECAPTCHA_PRIVATE_KEY = '6Lfq8TQfAAAAAOX154JRXbjiygB_NbNuYt6fiHKX'
 
@@ -67,6 +73,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
