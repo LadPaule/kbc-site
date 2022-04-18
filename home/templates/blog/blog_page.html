@@ -1,32 +1,33 @@
+{% extends 'base.html' %}
 {% load static wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
 {% block body_class %}template-homepage{% endblock %} 
 {% block extra_css %} 
 {% endblock extra_css %} 
 {% block content %} 
 
-<!-- ======= Blog Single Section ======= -->
+ <!-- ======= Blog Single Section ======= -->
  <section id="blog" class="blog">
   <div class="container" data-aos="fade-up">
     <div class="row">
       <div class="col-lg-8 entries">
         <article class="entry entry-single">
           {% for item in page.gallery_images.all %}
+            {% image item.image original as img %}
             <div class="entry-img">
-              {% image item.image original as blog_image %}
-
-              <img src="{{ blog_image.url }}" alt="" class="img-fluid">
+              <img src="{{ img.url }}" alt="" class="img-fluid">
             </div>
           {% endfor %}
           <h2 class="entry-title">
-            <a href="{% pageurl post %}">{{ page.title }}</a>
+            <a href="blog-single.html">{{ page.title }}</a>
           </h2>
           <div class="entry-meta">
             <ul>
-              <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-              <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-              <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
+              <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">{{ self.author }}</a></li>
+              <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="{{ self.date }}">{{ page.date }}</time></a></li>
+              <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">{{ page.comments }}</a></li>
             </ul>
           </div>
+
           <div class="entry-content">
             {{ page.body|richtext }}
           </div>
@@ -35,6 +36,7 @@
             <ul class="cats">
               <li><a href="#">Business</a></li>
             </ul>
+
             <i class="bi bi-tags"></i>
             <ul class="tags">
               <li><a href="#">Creative</a></li>
@@ -42,7 +44,9 @@
               <li><a href="#">Marketing</a></li>
             </ul>
           </div>
+
         </article><!-- End blog entry -->
+
         <div class="blog-author d-flex align-items-center">
           <img src="assets/img/blog/blog-author.jpg" class="rounded-circle float-left" alt="">
           <div>
@@ -57,8 +61,11 @@
             </p>
           </div>
         </div><!-- End blog author bio -->
+
         <div class="blog-comments">
+
           <h4 class="comments-count">8 Comments</h4>
+
           <div id="comment-1" class="comment">
             <div class="d-flex">
               <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div>
@@ -119,20 +126,6 @@
 
           </div><!-- End comment #2-->
 
-          <div id="comment-3" class="comment">
-            <div class="d-flex">
-              <div class="comment-img"><img src="assets/img/blog/comments-5.jpg" alt=""></div>
-              <div>
-                <h5><a href="">Nolan Davidson</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
-                <time datetime="2020-01-01">01 Jan, 2020</time>
-                <p>
-                  Distinctio nesciunt rerum reprehenderit sed. Iste omnis eius repellendus quia nihil ut accusantium tempore. Nesciunt expedita id dolor exercitationem aspernatur aut quam ut. Voluptatem est accusamus iste at.
-                  Non aut et et esse qui sit modi neque. Exercitationem et eos aspernatur. Ea est consequuntur officia beatae ea aut eos soluta. Non qui dolorum voluptatibus et optio veniam. Quam officia sit nostrum dolorem.
-                </p>
-              </div>
-            </div>
-
-          </div><!-- End comment #3 -->
 
           <div id="comment-4" class="comment">
             <div class="d-flex">
@@ -173,9 +166,13 @@
               <button type="submit" class="btn btn-primary">Post Comment</button>
 
             </form>
+
           </div>
+
         </div><!-- End blog comments -->
+
       </div><!-- End blog entries list -->
+
       <div class="col-lg-4">
 
         <div class="sidebar">
@@ -190,50 +187,74 @@
 
           <h3 class="sidebar-title">Categories</h3>
           <div class="sidebar-item categories">
-
             {% with categories=page.categories.all %}
               {% if categories %}
+                <h3>Posted in:</h3>
                 <ul>
                   {% for category in categories %}
-                    <li style="display: inline">
-                      {% image category.icon fill-32x32 style="vertical-align: middle" %}
-                      {{ category.name }}
+                  <li><a href="#">General <span>(25)</span></a></li>
+                    <li><a href="#">{{ category.name }} <span>(25)</span></a></li>
+                        {% image category.icon fill-32x32 style="vertical-align: middle" %}
+                        {{ category.name }}
                     </li>
                   {% endfor %}
-                </u>
+                </ul>
               {% endif %}
             {% endwith %}
           </div><!-- End sidebar categories-->
 
           <h3 class="sidebar-title">Recent Posts</h3>
           <div class="sidebar-item recent-posts">
-            
-
             <div class="post-item clearfix">
               <img src="assets/img/blog/blog-recent-1.jpg" alt="">
               <h4><a href="blog-single.html">Nihil blanditiis at in nihil autem</a></h4>
-              <time datetime="2020-01-01">{{ page.date }}</time>
+              <time datetime="2020-01-01">Jan 1, 2020</time>
             </div>
+
+            <div class="post-item clearfix">
+              <img src="assets/img/blog/blog-recent-2.jpg" alt="">
+              <h4><a href="blog-single.html">Quidem autem et impedit</a></h4>
+              <time datetime="2020-01-01">Jan 1, 2020</time>
+            </div>
+
+            <div class="post-item clearfix">
+              <img src="assets/img/blog/blog-recent-3.jpg" alt="">
+              <h4><a href="blog-single.html">Id quia et et ut maxime similique occaecati ut</a></h4>
+              <time datetime="2020-01-01">Jan 1, 2020</time>
+            </div>
+
+            <div class="post-item clearfix">
+              <img src="assets/img/blog/blog-recent-4.jpg" alt="">
+              <h4><a href="blog-single.html">Laborum corporis quo dara net para</a></h4>
+              <time datetime="2020-01-01">Jan 1, 2020</time>
+            </div>
+
+            <div class="post-item clearfix">
+              <img src="assets/img/blog/blog-recent-5.jpg" alt="">
+              <h4><a href="blog-single.html">Et dolores corrupti quae illo quod dolor</a></h4>
+              <time datetime="2020-01-01">Jan 1, 2020</time>
+            </div>
+
           </div><!-- End sidebar recent posts-->
 
           <h3 class="sidebar-title">Tags</h3>
           <div class="sidebar-item tags">
             <ul>
               {% if page.tags.all.count %}
-                {% for tag in page.tags.all %}
-                    <li>
-                      <a href="{% slugurl 'tags' %}?tag={{ tag }}">
-                        <button type="button">{{ tag }}</button>
-                      </a>
-                  </li>
-                {% endfor %}
+                  {% for tag in page.tags.all %}
+                  <li><a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a></li>
+                  {% endfor %}
+                </div>
               {% endif %}
             </ul>
           </div><!-- End sidebar tags-->
+
         </div><!-- End sidebar -->
+
       </div><!-- End blog sidebar -->
+
     </div>
+
   </div>
- <p href="{{ page.get_parent.url }}">Back to {{ page.get_parent.title }}</p>
 </section><!-- End Blog Single Section -->
 {% endblock %}
