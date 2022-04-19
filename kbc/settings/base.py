@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     'wagtail.contrib.redirects',
     'wagtail.contrib.typed_table_block',
     'wagtail.embeds',
-    'wagtail.contrib.modeladmin',
     'wagtail_gallery',
     'wagtail.sites',
     'wagtail.users',
@@ -42,6 +41,10 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
+    'mjml',
+    'newsletter',
+    'birdsong',
+    'wagtail.contrib.modeladmin',
     'django.contrib.sitemaps',
     'django_comments_xtd',
     'django_comments',
@@ -73,7 +76,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'in-v3.mailjet.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'paul'
+EMAIL_HOST_PASSWORD = 'Onemelchizedec'
+
+MJML_EXEC_CMD = './node_modules/.bin/mjml'
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -1,0 +1,4 @@
+<form action="{% url 'newsletter-signup' %}" method="POST" id="newsletter-signup-form">
+  {% csrf_token %}
+  <input type="email" name="email"><input type="submit" value="Subscribe">
+</form>

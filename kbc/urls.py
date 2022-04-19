@@ -7,6 +7,7 @@ from wagtail.core import urls as wagtail_urls
 from django_comments_xtd import urls as django_comments_xtd_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.contrib.sitemaps.views import sitemap
+from newsletter import views as newsletter_views
 
 from search import views as search_views
 
@@ -16,7 +17,7 @@ urlpatterns = [
     path('admin/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
     path('comments', include(django_comments_xtd_urls)),
-
+    path('newsletter/signup/', newsletter_views.signup, name='newsletter-signup'),
     path('search/', search_views.search, name='search'),
 
 ]
