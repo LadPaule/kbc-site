@@ -4,6 +4,14 @@
 
 {% block content %}
 
-<p>{{ page.thank_you_text|richtext }}</p>
+<section id="team" class="team section-bg">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2>Message received</h2>
+      {{ self.thank_you_text|richtext }}
+      <h1> <a href="{{ page.get_parent.url }}">Go back home</a></h1>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

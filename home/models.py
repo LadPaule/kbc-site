@@ -6,6 +6,7 @@ from modelcluster.fields import ParentalKey
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, FieldRowPanel, StreamFieldPanel
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
+from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtailcaptcha.models import WagtailCaptchaEmailForm
