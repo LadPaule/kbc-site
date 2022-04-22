@@ -1,6 +1,6 @@
 from email.policy import default
 from django.db import models
-from wagtail.core import blocks
+from streams.blocks import TableBlock as tabeblock
 from wagtail.core.models import Page, Orderable
 from modelcluster.fields import ParentalKey
 from wagtail.core.fields import RichTextField, StreamField
@@ -15,11 +15,15 @@ class HomePage(Page):
     body = RichTextField(blank=True)
     weekly_activities = RichTextField(blank=True)
     video_url = models.URLField("Video URL", blank=True)
+    pray_with_us = RichTextField(blank=True)
+    tabled = StreamField(tabeblock(), blank=True)
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full", help_text="This is the body of the page"),
         FieldPanel('video_url', classname="full", help_text="This is the video url of the page"),
         InlinePanel('gallery_images', label="Carousel or Slider images", help_text="Upload images to the carousel"),
         InlinePanel('ministries', label="ministry Cards", help_text="Edit the ministries&apos; cards"),
+        FieldPanel('pray_with_us', classname="full", help_text="this is the Pray concerns fiels"),
+        StreamFieldPanel('tabled', help_text="This table for the Weekly Activities"),
     ]
 class HomePageGalleryImage(Orderable):
     page = ParentalKey('HomePage', on_delete=models.CASCADE, related_name='gallery_images')

@@ -13,7 +13,7 @@
             <div class="carousel-item {% if forloop.first %} active {% endif %}" style="background-image: url('{{slide_image.url}}');">
               <div class="carousel-container">
                 <div class="carousel-content animate__animated animate__fadeInUp">
-                  <h2>{{ item.image_title }}</h2>
+                  <h2 style="text-align: center; ">{{ item.image_title }}</h2>
                   <p>
                     {{ item.caption }}
                   </p>
@@ -70,7 +70,7 @@
 </section>
 <!-- End About Us Section -->
 
-  <!-- ======= Services Section ======= -->
+  <!-- ======= Minitries Section ======= -->
   <section id="services" class="services section-bg">
     <div class="container" data-aos="fade-up">
 
@@ -93,6 +93,27 @@
 
     </div>
   </section> 
-  <!-- End Services Section -->
+  <!-- End Minitries Section -->
+   <!-- ======= Periodic updates======= -->
+   <section id="about-us" class="about-us">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row content">
+        <div class="col-lg-6 " data-aos="fade-right" style="height:350px; overflow-y: scroll;">
+          {{ page.pray_with_us|richtext }}
+        </div>
+        <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left" style="height:350px; overflow-y: scroll; overflow-x: auto">
+          <p style="text-align: center; font-weight: bold; padding-top: 18px">Our Weekly Activities</p><hr/>
+          {% comment %} Weekly activities table {% endcomment %}
+          <table class="table table-bordered table-hover">
+              {{ page.tabled }}
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End About Us Section -->
+
+  <!-- ======= Periodic updates ======= -->
 
 {% endblock  %}
