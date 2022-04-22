@@ -57,3 +57,7 @@ header {
 .c-explorer__header{
   color: #0c0016 !important;
 }
+.wagtail-userbar-nav{
+  display: none !important;
+  opacity: 0 !important;
+}

@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'wagtail.contrib.typed_table_block',
     'wagtail.embeds',
     'wagtail_gallery',
+    'wagtail.contrib.table_block',
     'wagtail.sites',
     'wagtail.users',
     'wagtail.snippets',
