@@ -266,7 +266,7 @@ class DiscipleshipPage(Page):
     )
     content_panels = Page.content_panels + [
         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
-        FieldPanel('video', classname="full", help_text="This is the video url of the children ministry page"),
+        EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
         InlinePanel('Discipleship_ministry_faqs', label="Frequently asked questions about the KBC Discipleship ministry", help_text="Upload images to the carousel"),
     
     ]
@@ -329,10 +329,10 @@ class PastoratePageGalleryImage(Orderable):
     page = ParentalKey('PastoratePage', on_delete=models.CASCADE, related_name='profile_image')
     photograph = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
     story = RichTextField(blank=True)
-    elders_name= models.CharField(blank=True, max_length=250)
+    name_of_the_pastor= models.CharField(blank=True, max_length=250)
     panels = [ ImageChooserPanel('photograph'),
         FieldPanel('story'),
-        FieldPanel('elders_name'),
+        FieldPanel('name_of_the_pastor'),
     ]
 
 class StaffPage(Page):

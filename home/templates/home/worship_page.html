@@ -1,5 +1,5 @@
 {% extends "base.html" %} 
-{% load static wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
+{% load static wagtailcore_tags embed_video_tags wagtailimages_tags wagtailembeds_tags %} 
 {% block body_class %}template-homepage{% endblock %} 
 {% block extra_css %} 
 <link href="{% static 'css/hero.css' %}" rel="stylesheet">
@@ -46,7 +46,9 @@
       <div class="col-lg-6" data-aos="fade-right">
         <h2>Watch Our Recent Stream</h2>
         <div class="video_container">
-          {% embed page.video max_width="800" %}
+          {% video self.video.url as my_video %}
+            {% video my_video 'small' %}
+          {% endvideo %}
         </div>
       </div>
       <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left">
