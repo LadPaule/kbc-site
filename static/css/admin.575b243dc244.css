@@ -1,0 +1,63 @@
+.sidebar__inner {
+  background: #0c0016 !important;
+}
+
+.breadcrumb {
+  background: #000e5f !important;
+}
+.index {
+  background: #006697 !important;
+}
+
+.breadcrumb .arrow_right_icon {
+  color: #fff !important;
+}
+.hasform {
+  background: #006697 !important;
+}
+header {
+  background: #006697 !important;
+}
+.Draftail-Toolbar{
+  background: #0c0016 !important;
+  color: #fff !important;
+}
+.title-wrapper{
+  background: #4c038888 !important;
+  color: #fff !important;
+}
+.object>.title-wrapper:before{
+  background: #10001dd7 !important;
+  color: #fff !important;
+}
+.footer__container:first-child{
+  background: #10001d !important;
+  color: #fff !important;
+}
+.footer__container{
+  background: #10001d  !important;
+  color: #fff !important;
+}
+.listing .title .title-wrapper, .listing .title h2{
+  background: #fff !important;
+  color: #0c0016 !important;
+}
+.object>.title-wrapper{
+  padding-left: 80px;
+  padding-left: 80px;
+}
+.object>.title-wrapper > h2{
+  font-size: medium;
+  font-weight: 400;
+}
+.nav-wrapper .inner{
+  background: #10001dd7 !important;
+  color: #fff !important;
+}
+.c-explorer__header{
+  color: #0c0016 !important;
+}
+.wagtail-userbar-nav{
+  display: none !important;
+  opacity: 0 !important;
+}

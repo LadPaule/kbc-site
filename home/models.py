@@ -4,9 +4,12 @@ from streams.blocks import TableBlock as tabeblock
 from wagtail.core.models import Page, Orderable
 from modelcluster.fields import ParentalKey
 from wagtail.core.fields import RichTextField, StreamField
+from wagtail_embed_videos import get_embed_video_model_string
+from wagtail_embed_videos.edit_handlers import EmbedVideoChooserPanel
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, FieldRowPanel, StreamFieldPanel
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtailmedia.edit_handlers import MediaChooserPanel
 from wagtail.search import index
 from wagtailcaptcha.models import WagtailCaptchaEmailForm
 
@@ -14,16 +17,35 @@ from wagtailcaptcha.models import WagtailCaptchaEmailForm
 class HomePage(Page):
     body = RichTextField(blank=True)
     weekly_activities = RichTextField(blank=True)
-    video_url = models.URLField("Video URL", blank=True)
+    featured_media = models.ForeignKey('wagtailmedia.Media', null=True, blank=True,
+        on_delete=models.SET_NULL, related_name="+", help_text="Video or image to be displayed on the home page")
+  
+    video = models.ForeignKey(
+        get_embed_video_model_string(),
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
     pray_with_us = RichTextField(blank=True)
     tabled = StreamField(tabeblock(), blank=True)
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full", help_text="This is the body of the page"),
-        FieldPanel('video_url', classname="full", help_text="This is the video url of the page"),
+        EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
+        InlinePanel('stream_media', label="Audio Media", help_text="Upload audio to the Home Page"),
         InlinePanel('gallery_images', label="Carousel or Slider images", help_text="Upload images to the carousel"),
         InlinePanel('ministries', label="ministry Cards", help_text="Edit the ministries&apos; cards"),
         FieldPanel('pray_with_us', classname="full", help_text="this is the Pray concerns fiels"),
         StreamFieldPanel('tabled', help_text="This table for the Weekly Activities"),
+    ]
+
+class HomePageMedia(Orderable):
+    page = ParentalKey('HomePage', on_delete=models.CASCADE, related_name='stream_media')
+    media = models.ForeignKey('wagtailmedia.Media', on_delete=models.CASCADE, related_name='+')
+    media_text = models.CharField(max_length=255, blank=True)
+    panels = [
+        MediaChooserPanel('media'),
+        FieldPanel('media_text'),
     ]
 class HomePageGalleryImage(Orderable):
     page = ParentalKey('HomePage', on_delete=models.CASCADE, related_name='gallery_images')
@@ -31,8 +53,8 @@ class HomePageGalleryImage(Orderable):
     caption = models.CharField (blank=True, max_length=800)
     image_title= models.CharField(blank=True, max_length=250)
     panels = [ ImageChooserPanel('image'),
-        FieldPanel('caption'),
         FieldPanel('image_title'),
+        FieldPanel('caption'),
     ]
 
 class HomePageMinistry(Orderable):
@@ -149,10 +171,15 @@ class ConvenantPage(Page):
 # Ministries
 class ChildrenPage(Page):
     about_body = RichTextField(blank=True)
-    video = models.URLField("Video URL", blank=True)
+    video = models.ForeignKey(
+        get_embed_video_model_string(),
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     content_panels = Page.content_panels + [
         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
-        FieldPanel('video', classname="full", help_text="This is the video url of the children ministry page"),
+        EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
         InlinePanel('children_ministry_faqs', label="Frequently asked questions about the children ministry", help_text="Upload images to the carousel"),
     
     ]  
@@ -167,10 +194,15 @@ class ChildrenPageFaqs(Orderable):
 
 class AdultsPage(Page):
     about_body = RichTextField(blank=True)
-    video = models.URLField("Video URL", blank=True)
+    video = models.ForeignKey(
+        get_embed_video_model_string(),
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     content_panels = Page.content_panels + [
         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
-        FieldPanel('video', classname="full", help_text="This is the video url of the children ministry page"),
+        EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
         InlinePanel('adult_ministry_faqs', label="Frequently asked questions about the KBC Adults ministry", help_text="Upload images to the carousel"),
     
     ]
@@ -185,10 +217,15 @@ class AdultsPageFaqs(Orderable):
 
 class YouthPage(Page):
     about_body = RichTextField(blank=True)
-    video = models.URLField("Video URL", blank=True)
+    video = models.ForeignKey(
+        get_embed_video_model_string(),
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     content_panels = Page.content_panels + [
-         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
-        FieldPanel('video', classname="full", help_text="This is the video url of the children ministry page"),
+        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
         InlinePanel('youth_ministry_faqs', label="Frequently asked questions about the KBC Youth ministry", help_text="Upload images to the carousel"),
     
     ]
@@ -207,7 +244,7 @@ class WorshipPage(Page):
     video = models.URLField("Video URL", blank=True)
     content_panels = Page.content_panels + [
         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
-        FieldPanel('video', classname="full", help_text="This is the video url of the children ministry page"),
+        EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
         InlinePanel('worship_ministry_faqs', label="Frequently asked questions about the KBC Worship ministry", help_text="Upload images to the carousel"),
     
     ]
@@ -221,7 +258,12 @@ class WorshipPageFaqs(Orderable):
     ]  
 class DiscipleshipPage(Page):
     about_body = RichTextField(blank=True)
-    video = models.URLField("Video URL", blank=True)
+    video = models.ForeignKey(
+        get_embed_video_model_string(),
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     content_panels = Page.content_panels + [
         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
         FieldPanel('video', classname="full", help_text="This is the video url of the children ministry page"),

@@ -1,7 +1,27 @@
 {% extends "base.html" %} 
-{% load static wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
+{% load static wagtailcore_tags embed_video_tags wagtailimages_tags wagtailembeds_tags %} 
 {% block body_class %}template-homepage{% endblock %} 
 {% block extra_css %} 
+<style>
+  .clickable{
+    color: #fff; 
+    background: #006697; 
+    border: none; 
+    height: 40px; 
+    border-radius: 2px; 
+    width: 200px;
+  }
+  .clickable a{
+    color: #fff; 
+    text-decoration: none;
+    font-size: 18px;
+  }
+  .clickable:hover{
+    background: #800080; 
+    color: #fff; 
+    font-weight: bold;
+  }
+</style>
 {% endblock extra_css %} 
 {% block content %} 
   <!-- ======= Hero Section ======= -->
@@ -46,24 +66,32 @@
       <div class="col-lg-6" data-aos="fade-right">
         <h2>Watch Our Recent Stream</h2>
         <div style="width:full">
-          {% embed page.video_url max_width=1500 %}
+          <!-- embed your video here -->
+          {% video self.video.url as my_video %}
+            {% video my_video 'small' %}
+          {% endvideo %}
+
+          <p style="text-align: left; font-weight: bold; padding-x: 4px">Listen to our audio stream</p>
+          {% for item in page.stream_media.all %}
+            <audio controls>
+              <source src="{{ item.media }}" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          {% endfor %}
         </div>
       </div>
       <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left">
-        <p>
-          Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum
-        </p>
-        <ul>
-          <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequa</li>
-          <li><i class="ri-check-double-line"></i> Duis aute irure dolor in reprehenderit in voluptate velit</li>
-          <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in</li>
-        </ul>
-        <p class="fst-italic">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua.
-        </p>
+        <h3 style="text-align: center;">Mission Statement</h3> <hr />
+        <p style="text-align: center; font-size: 20px;">
+          To develop individuals committed to growing in the knowledge of our 
+          Lord Jesus Christ and leading others to the same commitment, so that 
+          we can establish a biblically guided and growing community.
+        </p><br />
+        <h2 style="font-size: 24px; text-align: center;">To know Him and make Him known</h2>
+        <div class="fst-italic" style="display: flex; flex-direction: row; justify-content: space-between;">
+          <button class="clickable"> <a href="/annoucements">Announcements</a></button>
+          <button class="clickable"> <a href="/wedding_banns"> Wedding Banns</a></button>
+        </div>
       </div>
     </div>
   </div>

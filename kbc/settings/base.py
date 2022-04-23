@@ -33,7 +33,9 @@ INSTALLED_APPS = [
     'wagtail.images',
     'wagtail.search',
     'wagtail.admin',
+    'wagtailaudioembed',
     'wagtail.core',
+    'wagtail_embed_videos',
     'wagtailmedia',
 
     'allauth',
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     'mjml',
+    'embed_video',
     'newsletter',
     'birdsong',
     'wagtail.contrib.modeladmin',
