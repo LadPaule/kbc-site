@@ -241,7 +241,13 @@ class YouthPageFaqs(Orderable):
 
 class WorshipPage(Page):
     about_body = RichTextField(blank=True)
-    video = models.URLField("Video URL", blank=True)
+    
+    video = models.ForeignKey(
+        get_embed_video_model_string(),
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     content_panels = Page.content_panels + [
         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
         EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
