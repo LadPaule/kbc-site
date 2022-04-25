@@ -1,0 +1,38 @@
+{% extends "base.html" %} 
+{% load static wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
+{% block body_class %}template-homepage{% endblock %} 
+{% block extra_css %} 
+{% endblock extra_css %} 
+{% block content %}
+
+<!---gallery sectio-->
+  <section id="portfolio" class="portfolio">
+    <div class="container">
+
+      <div class="row" data-aos="fade-up">
+        <div class="col-lg-12 d-flex justify-content-center">
+          <ul id="portfolio-flters">
+            <li data-filter="*" class="filter-active">All</li>
+            {% for tag in page.image_tag.all %}
+              <li data-filter=".filter-{{tag.tag}}">{{tag.tag}}</li> 
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="row portfolio-container" data-aos="fade-up">      
+          {% for photo in page.gallery_image.all %}
+            {% image photo.photograph original as img %}
+            <div class="col-lg-4 col-md-6 portfolio-item filter-{{photo.photograph_tag}}">
+              <img src="{{ img.url }}" style="border-radius: 10px;" class="img-fluid" alt="">
+              <div class="portfolio-info" style="color: purple; text-align: center;">
+                <h4>{{ photo.photo_caption }}</h4>
+                <p>{{photo.photograph_tag}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+
+    </div>
+  </section><!-- End gallery Section -->
+{% endblock  %}

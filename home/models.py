@@ -14,6 +14,7 @@ from wagtail.search import index
 from wagtailcaptcha.models import WagtailCaptchaEmailForm
 
 
+
 class HomePage(Page):
     body = RichTextField(blank=True)
     weekly_activities = RichTextField(blank=True)
@@ -32,21 +33,13 @@ class HomePage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full", help_text="This is the body of the page"),
         EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
-        InlinePanel('stream_media', label="Audio Media", help_text="Upload audio to the Home Page"),
+        MediaChooserPanel("featured_media", media_type="audio"),
         InlinePanel('gallery_images', label="Carousel or Slider images", help_text="Upload images to the carousel"),
         InlinePanel('ministries', label="ministry Cards", help_text="Edit the ministries&apos; cards"),
         FieldPanel('pray_with_us', classname="full", help_text="this is the Pray concerns fiels"),
         StreamFieldPanel('tabled', help_text="This table for the Weekly Activities"),
     ]
 
-class HomePageMedia(Orderable):
-    page = ParentalKey('HomePage', on_delete=models.CASCADE, related_name='stream_media')
-    media = models.ForeignKey('wagtailmedia.Media', on_delete=models.CASCADE, related_name='+')
-    media_text = models.CharField(max_length=255, blank=True)
-    panels = [
-        MediaChooserPanel('media'),
-        FieldPanel('media_text'),
-    ]
 class HomePageGalleryImage(Orderable):
     page = ParentalKey('HomePage', on_delete=models.CASCADE, related_name='gallery_images')
     image = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
@@ -308,6 +301,26 @@ class GivePageGalleryImage(Orderable):
 
 
 # Gallery Page
+class HomeGalleryPage(Page):
+    content_panels = Page.content_panels + [
+        InlinePanel('gallery_image', label="Gallery Images", help_text="Upload images to the gallery"),
+        InlinePanel('image_tag', label="Gallery tags", help_text="add or edit the tags for the gallery images"),
+    ]
+
+class HomeGalleryPageGalleryImage(Orderable):
+    page = ParentalKey('HomeGalleryPage', on_delete=models.CASCADE, related_name='gallery_image')
+    photo_caption = models.CharField(blank=True, max_length=250)
+    photograph = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
+    photograph_tag= models.CharField(blank=True, max_length=250)
+    panels = [ ImageChooserPanel('photograph'),
+        FieldPanel('photo_caption'),
+        FieldPanel('photograph_tag'),
+    ]
+class HomeGalleryPageTag(Orderable):
+    page = ParentalKey('HomeGalleryPage', on_delete=models.CASCADE, related_name='image_tag')
+    tag= models.CharField(blank=True, max_length=250)
+    panels = [FieldPanel('tag'), ]
+
 #Elders Board Page
 class EldersBoardPage(Page):
     intro = RichTextField(blank=True)
@@ -315,6 +328,7 @@ class EldersBoardPage(Page):
     FieldPanel('intro', classname="full", help_text="This is the body of the page"),
     InlinePanel('profile_image', label="Individual Photo files", help_text="Upload Photos of the elders"),
     ]
+
 class EldersBoardPageGalleryImage(Orderable):
     page = ParentalKey('EldersBoardPage', on_delete=models.CASCADE, related_name='profile_image')
     photograph = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
@@ -324,6 +338,7 @@ class EldersBoardPageGalleryImage(Orderable):
         FieldPanel('designation'),
         FieldPanel('elders_name'),
     ]
+
 
 class PastoratePage(Page):
     intro = RichTextField(blank=True)

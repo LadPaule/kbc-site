@@ -61,10 +61,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    
     'captcha',
     'wagtailcaptcha',
 ]
+
 
 
 COMMENTS_APP = 'django_comments_xtd'
@@ -105,6 +105,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'kbc.urls'
 
 WAGTAILMEDIA = {
+    'MEDIA_MODEL': 'wagtailmedia.Media',
+    'MEDIA_FORM_BASE': '',
     "AUDIO_EXTENSIONS": [ "aac", "aiff", "flac", "m4a", "m4b", "mp3", "ogg", "wav"],  # list of extensions
     "VIDEO_EXTENSIONS": ["avi", "h264", "m4v", "mkv", "mov", "mp4", "mpeg", "mpg", "ogv", "webm"],  # list of extensions
 }

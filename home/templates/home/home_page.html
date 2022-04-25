@@ -72,12 +72,10 @@
           {% endvideo %}
 
           <p style="text-align: left; font-weight: bold; padding-x: 4px">Listen to our audio stream</p>
-          {% for item in page.stream_media.all %}
-            <audio controls>
-              <source src="{{ item.media }}" type="audio/mpeg">
-              Your browser does not support the audio element.
-            </audio>
-          {% endfor %}
+    
+          <audio controls>
+            <source src="{{ page.featured_media.url }}" type="audio/mpeg">
+            Your browser does not support the audio element.
         </div>
       </div>
       <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left">
