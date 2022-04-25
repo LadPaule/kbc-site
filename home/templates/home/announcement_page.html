@@ -1,0 +1,33 @@
+{% extends "base.html" %} 
+{% load static wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
+{% block body_class %}template-homepage{% endblock %} 
+{% block extra_css %} 
+{% endblock extra_css %} 
+
+{% block content %}
+<!-- ======= Announcements Section ======= -->
+<section id="about-us" class="about-us">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2>KBC <strong>Announcements</strong></h2>
+      {{ page.intro|richtext }}
+    </div>
+    {% for ano in self.announcement.all %}
+      {% image ano.photograph original as ima %}
+      <div class="container" data-aos="fade-up">
+        <div class="row content">
+          <div class="col-lg-6" data-aos="fade-right" >
+           <img src="{{ ima.url }}" style="border-radius: 10px;"  width="500px" />
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left">
+            <h3 style="font-weight: black; font-size: 30px">{{ ano.announcement_title }}</h3><hr/>
+            {{ ano.body|richtext }}
+          </div>
+        </div>
+        <hr/>
+      </div>
+    {% endfor %}
+
+  </div>
+</section><!-- End Announcements Section -->
+{% endblock %}

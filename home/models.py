@@ -12,6 +12,8 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtailmedia.edit_handlers import MediaChooserPanel
 from wagtail.search import index
 from wagtailcaptcha.models import WagtailCaptchaEmailForm
+from wagtail.documents.models import Document
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 
 
 
@@ -378,3 +380,41 @@ class StaffPageGalleryImage(Orderable):
         FieldPanel('linkedIn'),
     ]  
 
+class AnnouncementPage(Page):
+    intro = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+    FieldPanel('intro', classname="full", help_text="This is the body of the page"),
+    InlinePanel('announcement', label="Anouncement body", help_text="This is the body of the page"),
+    ]
+
+class AnnouncementPageGalleryImage(Orderable):
+    page = ParentalKey('AnnouncementPage', on_delete=models.CASCADE, related_name='announcement')
+    announcement_title = models.CharField(blank=True, max_length=250)
+    photograph = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, null=True, related_name='+')
+    body = RichTextField(blank=True)
+    panels = [ 
+        FieldPanel('announcement_title'),
+        ImageChooserPanel('photograph'),
+        FieldPanel('body'),
+    ]
+
+
+
+class WeddingBannsPage(Page):
+    intro = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+    FieldPanel('intro', classname="full", help_text="This is the body of the page"),
+    InlinePanel('wedding_banns_profile', label="profiles of the couple", help_text="provide or edit the profiles of the couple"),
+    ]
+class WeddingBannsPageGalleryImage(Orderable):
+    page = ParentalKey('WeddingBannsPage', on_delete=models.CASCADE, related_name='wedding_banns_profile')
+    title= models.CharField(blank=True, max_length=250)
+    image_image_of_the_groom_tobe = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
+    image_image_of_the_bride_tobe = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
+    body= RichTextField(blank=True)
+    panels = [ 
+        FieldPanel('title'),
+        ImageChooserPanel('image_image_of_the_groom_tobe'),
+        ImageChooserPanel('image_image_of_the_bride_tobe'),
+        FieldPanel('body'),
+    ]

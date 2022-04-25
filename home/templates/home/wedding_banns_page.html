@@ -1,0 +1,55 @@
+{% extends "base.html" %} 
+{% load static wagtailcore_tags embed_video_tags wagtailimages_tags wagtailembeds_tags %} 
+{% block body_class %}template-homepage{% endblock %} 
+{% block extra_css %} 
+<link href="{% static 'css/hero.css' %}" rel="stylesheet">
+<link href="{% static 'css/ie6.css' %}" rel="stylesheet">
+{% endblock extra_css %} 
+
+{% block content %}  
+<section id="team" class="team section-bg">
+  <div class="container">
+
+    <div class="section-title" data-aos="fade-up">
+      <h2>KBC<strong> Wedding Banns</strong></h2>
+      {{ page.intro|richtext }}
+    </div>
+<hr/>
+    <div class="row">
+      {% for profile in page.wedding_banns_profile.all  %}
+      {% image profile.image_image_of_the_groom_tobe original as groom_img %}
+      {% image profile.image_image_of_the_bride_tobe original as bride_img %}
+
+      <h3 style="text-align: center">{{ profile.title }}</h3>
+      <div style="display: flex; flex-direction: row; justify-content: space-around;">
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+          <div class="member" data-aos="fade-up" >
+            <div class="member-img">
+              <img src="{{ groom_img.url }}" class="img-fluid" alt="{{ groom_img.title }}">
+            </div>
+            <div class="member-info">
+              <h4>Groom to be</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+          <div class="member" data-aos="fade-up">
+            <div class="member-img">
+              <img src="{{ bride_img.url }}" class="img-fluid" alt="{{ bride_img.title }}">
+            </div>
+            <div class="member-info">
+              <h4>Bride to be</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+      {{ profile.body|richtext }}
+      <hr/>
+      </div>
+      {% endfor %}
+    </div>
+ </section>
+<!-- End About Us Section -->
+{% endblock %}
