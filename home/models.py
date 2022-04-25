@@ -398,8 +398,6 @@ class AnnouncementPageGalleryImage(Orderable):
         FieldPanel('body'),
     ]
 
-
-
 class WeddingBannsPage(Page):
     intro = RichTextField(blank=True)
     content_panels = Page.content_panels + [
@@ -417,4 +415,17 @@ class WeddingBannsPageGalleryImage(Orderable):
         ImageChooserPanel('image_image_of_the_groom_tobe'),
         ImageChooserPanel('image_image_of_the_bride_tobe'),
         FieldPanel('body'),
+    ]
+
+class TermsOfServicePage(Page):
+    intro = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+        FieldPanel('intro', classname="full", help_text="This is the body of the page"),
+    ]
+class PrivacyPolicyPage(Page):
+    intro = RichTextField(blank=True)
+    body= RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+        FieldPanel('intro', classname="full", help_text="This is the body of the page"),
+        FieldPanel('body', classname="full", help_text="This is the body of the page"),
     ]
