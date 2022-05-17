@@ -4,6 +4,7 @@ from streams.blocks import TableBlock as tabeblock
 from wagtail.core.models import Page, Orderable
 from modelcluster.fields import ParentalKey
 from wagtail.core.fields import RichTextField, StreamField
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail_embed_videos import get_embed_video_model_string
 from wagtail_embed_videos.edit_handlers import EmbedVideoChooserPanel
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, FieldRowPanel, StreamFieldPanel
@@ -29,6 +30,8 @@ class HomePage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    luganda_bible_study =  models.ForeignKey('wagtaildocs.Document', blank=True, null=True,  on_delete=models.SET_NULL, related_name='+')
+    English_bible_study =  models.ForeignKey('wagtaildocs.Document', blank=True, null=True,  on_delete=models.SET_NULL, related_name='+')
 
     pray_with_us = RichTextField(blank=True)
     tabled = StreamField(tabeblock(), blank=True)
@@ -36,6 +39,8 @@ class HomePage(Page):
         FieldPanel('body', classname="full", help_text="This is the body of the page"),
         EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
         MediaChooserPanel("featured_media", media_type="audio"),
+        DocumentChooserPanel("luganda_bible_study", help_text="This is the most recent Luganda bible study guideline"),
+        DocumentChooserPanel("English_bible_study", help_text="This is the most recent English bible study guideline"),
         InlinePanel('gallery_images', label="Carousel or Slider images", help_text="Upload images to the carousel"),
         InlinePanel('ministries', label="ministry Cards", help_text="Edit the ministries&apos; cards"),
         FieldPanel('pray_with_us', classname="full", help_text="this is the Pray concerns fiels"),

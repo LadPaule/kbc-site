@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtailaudioembed',
     'wagtail.core',
+    'wagtailnetlify',
     'wagtail_embed_videos',
     'wagtailmedia',
 
