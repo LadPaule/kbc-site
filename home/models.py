@@ -16,8 +16,6 @@ from wagtailcaptcha.models import WagtailCaptchaEmailForm
 from wagtail.documents.models import Document
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 
-
-
 class HomePage(Page):
     body = RichTextField(blank=True)
     weekly_activities = RichTextField(blank=True)
@@ -74,17 +72,18 @@ class HomePageMinistry(Orderable):
 
 class InceptionPage(Page):
     church_history = RichTextField(blank=True)
+    church_history_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
     more_history = RichTextField(blank=True)
     church_philosophy = RichTextField(blank=True)
     membership = RichTextField(blank=True)
     content_panels = Page.content_panels + [
         FieldPanel('church_history', classname="full", help_text="This is the body of the page"),
+        ImageChooserPanel('church_history_image', help_text="This is the most recent video stream"),
         InlinePanel('side_image', label="Side Image", help_text="Upload images to the hero Section/ kbc website banner"),
         FieldPanel('more_history', classname="full", help_text="This is more history of the page"),
         FieldPanel('church_philosophy', classname="full", help_text="This is where the church philosophy is"),
         FieldPanel('membership', classname="full", help_text="This is where the membership detail is contained"),
     ]
-
 class InceptionPageGalleryImage(Orderable):
     page = ParentalKey('InceptionPage', on_delete=models.CASCADE, related_name='side_image')
     image = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
@@ -98,9 +97,11 @@ class InceptionPageGalleryImage(Orderable):
 
 class ContactPage(AbstractEmailForm):
     intro = RichTextField(blank=True)
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
     thank_you_text=RichTextField(blank=True)
     content_panels = AbstractEmailForm.content_panels + [
         FieldPanel('intro', help_text="This is the body of the page"),
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
         InlinePanel('form_fields', label="Form Fields"),
         FieldPanel('thank_you_text'),
         MultiFieldPanel([
@@ -115,11 +116,13 @@ class ContactPage(AbstractEmailForm):
 class ContactPageFormField(AbstractFormField):
     page = ParentalKey(ContactPage, on_delete=models.CASCADE, related_name='form_fields')
 # Prayer Request Page
-class PrayerRequestPage(WagtailCaptchaEmailForm):
+class PrayerRequestPage(AbstractEmailForm):
     intro = RichTextField(blank=True)
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
     thank_you_text = RichTextField(blank=True)
-    content_panels = AbstractEmailForm.content_panels + [
+    content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full", help_text="This is the intro of the Contact Page"),
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
         InlinePanel('form_fields', label="Contact Form Fields", help_text="Add Contact Form Fields"),
         FieldPanel('thank_you_text', classname="full", help_text="This is the appreciative text of the Contact Page"),
         MultiFieldPanel([
@@ -130,17 +133,18 @@ class PrayerRequestPage(WagtailCaptchaEmailForm):
             FieldPanel('subject'),
         ], heading="Email Settings"),
     ]
-
 class PrayerRequestPageFormField(AbstractFormField):
     page = ParentalKey('PrayerRequestPage', on_delete=models.CASCADE, related_name='form_fields')
 
 
 # Appointments Page
-class AppointmentsPage(WagtailCaptchaEmailForm):
+class AppointmentsPage(AbstractEmailForm):
     intro = RichTextField(blank=True)
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
     thank_you_text = RichTextField(blank=True)
-    content_panels = AbstractEmailForm.content_panels + [
+    content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full", help_text="This is the intro of the Contact Page"),
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
         InlinePanel('form_fields', label="Appointment Form Fields", help_text="Add Contact Form Fields"),
         FieldPanel('thank_you_text', classname="full", help_text="This is the appreciative text of the Contact Page"),
         MultiFieldPanel([
@@ -154,22 +158,26 @@ class AppointmentsPage(WagtailCaptchaEmailForm):
 class AppointmentsPageFormField(AbstractFormField):
     page = ParentalKey('AppointmentsPage', on_delete=models.CASCADE, related_name='form_fields')
 
-
 # Statement of Faith
 class StatementOfFaithPage(Page):
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
     statement_body = RichTextField(blank=True)
     content_panels = Page.content_panels + [
-       FieldPanel('statement_body', classname="full", help_text="This is the body of the Page"),
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
+        FieldPanel('statement_body', classname="full", help_text="This is the body of the Page"),
     ]
 
 # convenant page
 class ConvenantPage(Page):
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
     convenant_body = RichTextField(blank=True)
     content_panels = Page.content_panels + [
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
         FieldPanel('convenant_body', classname="full", help_text="This is the body of the Page"),
     ]
 # Ministries
 class ChildrenPage(Page):
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
     about_body = RichTextField(blank=True)
     video = models.ForeignKey(
         get_embed_video_model_string(),
@@ -178,6 +186,7 @@ class ChildrenPage(Page):
         related_name='+'
     )
     content_panels = Page.content_panels + [
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
         EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
         InlinePanel('children_ministry_faqs', label="Frequently asked questions about the children ministry", help_text="Upload images to the carousel"),
@@ -192,30 +201,8 @@ class ChildrenPageFaqs(Orderable):
         FieldPanel('answer'),
     ]  
 
-class AdultsPage(Page):
-    about_body = RichTextField(blank=True)
-    video = models.ForeignKey(
-        get_embed_video_model_string(),
-        null=True, blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-    content_panels = Page.content_panels + [
-        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
-        EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
-        InlinePanel('adult_ministry_faqs', label="Frequently asked questions about the KBC Adults ministry", help_text="Upload images to the carousel"),
-    
-    ]
-class AdultsPageFaqs(Orderable):
-    page = ParentalKey('AdultsPage', related_name='adult_ministry_faqs')
-    question = models.CharField(max_length=800, blank=True)
-    answer = models.CharField (blank=True, max_length=800)
-    panels = [
-        FieldPanel('question'),
-        FieldPanel('answer'),
-    ]  
-
 class YouthPage(Page):
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
     about_body = RichTextField(blank=True)
     video = models.ForeignKey(
         get_embed_video_model_string(),
@@ -224,12 +211,12 @@ class YouthPage(Page):
         related_name='+'
     )
     content_panels = Page.content_panels + [
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
         EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
         InlinePanel('youth_ministry_faqs', label="Frequently asked questions about the KBC Youth ministry", help_text="Upload images to the carousel"),
     
     ]
-
 class YouthPageFaqs(Orderable):
     page = ParentalKey('YouthPage', related_name='youth_ministry_faqs')
     question = models.CharField(max_length=800, blank=True)
@@ -240,6 +227,7 @@ class YouthPageFaqs(Orderable):
     ]
 
 class WorshipPage(Page):
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
     about_body = RichTextField(blank=True)
     
     video = models.ForeignKey(
@@ -249,6 +237,7 @@ class WorshipPage(Page):
         related_name='+'
     )
     content_panels = Page.content_panels + [
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
         EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
         InlinePanel('worship_ministry_faqs', label="Frequently asked questions about the KBC Worship ministry", help_text="Upload images to the carousel"),
@@ -261,8 +250,10 @@ class WorshipPageFaqs(Orderable):
     panels = [
         FieldPanel('question'),
         FieldPanel('answer'),
-    ]  
+    ] 
+ 
 class DiscipleshipPage(Page):
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
     about_body = RichTextField(blank=True)
     video = models.ForeignKey(
         get_embed_video_model_string(),
@@ -271,6 +262,7 @@ class DiscipleshipPage(Page):
         related_name='+'
     )
     content_panels = Page.content_panels + [
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
         FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
         EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
         InlinePanel('Discipleship_ministry_faqs', label="Frequently asked questions about the KBC Discipleship ministry", help_text="Upload images to the carousel"),
@@ -285,7 +277,6 @@ class DiscipleshipPageFaqs(Orderable):
         FieldPanel('answer'),
     ]  
 
-
 # Give Page
 class GivePage(Page):
     intro = RichTextField(blank=True)
@@ -293,7 +284,6 @@ class GivePage(Page):
         FieldPanel('intro', classname="full", help_text="This is the intro of the Page"),
         InlinePanel('card_information', label="card Information", help_text="Upload images to the give give card"),
     ]
-
 class GivePageGalleryImage(Orderable):
     page = ParentalKey('GivePage', on_delete=models.CASCADE, related_name='card_information')
     card_image = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
@@ -313,7 +303,6 @@ class HomeGalleryPage(Page):
         InlinePanel('gallery_image', label="Gallery Images", help_text="Upload images to the gallery"),
         InlinePanel('image_tag', label="Gallery tags", help_text="add or edit the tags for the gallery images"),
     ]
-
 class HomeGalleryPageGalleryImage(Orderable):
     page = ParentalKey('HomeGalleryPage', on_delete=models.CASCADE, related_name='gallery_image')
     photo_caption = models.CharField(blank=True, max_length=250)
@@ -335,7 +324,6 @@ class EldersBoardPage(Page):
     FieldPanel('intro', classname="full", help_text="This is the body of the page"),
     InlinePanel('profile_image', label="Individual Photo files", help_text="Upload Photos of the elders"),
     ]
-
 class EldersBoardPageGalleryImage(Orderable):
     page = ParentalKey('EldersBoardPage', on_delete=models.CASCADE, related_name='profile_image')
     photograph = models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
@@ -345,7 +333,6 @@ class EldersBoardPageGalleryImage(Orderable):
         FieldPanel('designation'),
         FieldPanel('elders_name'),
     ]
-
 
 class PastoratePage(Page):
     intro = RichTextField(blank=True)
@@ -433,4 +420,135 @@ class PrivacyPolicyPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full", help_text="This is the body of the page"),
         FieldPanel('body', classname="full", help_text="This is the body of the page"),
+    ]
+
+class CouplesPage(Page):
+    about_body = RichTextField(blank=True)
+    video = models.ForeignKey(
+        get_embed_video_model_string(),
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    content_panels = Page.content_panels + [
+        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
+        InlinePanel('couples_ministry_faqs', label="Frequently asked questions about the KBC couples ministry", help_text="Upload images to the carousel"),
+    
+    ]
+class CouplesPageFaqs(Orderable):
+    page = ParentalKey('CouplesPage', related_name='couples_ministry_faqs')
+    question = models.CharField(max_length=800, blank=True)
+    answer = models.CharField (blank=True, max_length=800)
+    panels = [
+        FieldPanel('question'),
+        FieldPanel('answer'),
+    ] 
+
+class MissionsPage(Page):
+    about_body = RichTextField(blank=True)
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
+    content_panels = Page.content_panels + [
+        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
+        InlinePanel('missions_ministry_faqs', label="Frequently asked questions about the KBC Missions ministry", help_text="Upload images to the carousel"),
+        InlinePanel('upcoming_missions', label="KBC upcoming Missions", help_text="Schedule and Edit the upcoming missions"),
+    ]
+class MissionsPageFaqs(Orderable):
+    page = ParentalKey('MissionsPage', related_name='missions_ministry_faqs')
+    question = models.CharField(max_length=800, blank=True)
+    answer = models.CharField (blank=True, max_length=800)
+    panels = [
+        FieldPanel('question'),
+        FieldPanel('answer'),
+    ]
+class UpcomingMissions(Orderable):
+    page = ParentalKey('MissionsPage', related_name='upcoming_missions')
+    title = models.CharField(max_length=250, blank=True)
+    mission_date = models.DateField(blank=True)
+    cta = models.CharField(max_length=250, blank=True)
+    event_image= models.ForeignKey('wagtailimages.Image', on_delete=models.CASCADE, related_name='+')
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('mission_date'),
+        FieldPanel('cta'),
+        ImageChooserPanel('event_image'),
+    ]
+class MenPage(Page):
+    about_body = RichTextField(blank=True)
+    video = models.ForeignKey(
+        get_embed_video_model_string(),
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    content_panels = Page.content_panels + [
+        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
+        InlinePanel('men_ministry_faqs', label="Frequently asked questions about the KBC Men ministry", help_text="Upload images to the carousel"),
+    
+    ]
+class MenPageFaqs(Orderable):
+    page = ParentalKey('MenPage', related_name='men_ministry_faqs')
+    question = models.CharField(max_length=800, blank=True)
+    answer = models.CharField (blank=True, max_length=800)
+    panels = [
+        FieldPanel('question'),
+        FieldPanel('answer'),
+    ]
+
+class WomenPage(Page):
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
+    about_body = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
+        InlinePanel('women_ministry_faqs', label="Frequently asked questions about the KBC women ministry", help_text="Upload images to the carousel"),
+    
+    ]
+class WomenPageFaqs(Orderable):
+    page = ParentalKey('WomenPage', related_name='women_ministry_faqs')
+    question = models.CharField(max_length=800, blank=True)
+    answer = models.CharField (blank=True, max_length=800)
+    panels = [
+        FieldPanel('question'),
+        FieldPanel('answer'),
+    ]
+
+class ChurchCarePage(Page):
+    about_body = RichTextField(blank=True)
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
+    featured_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
+    content_panels = Page.content_panels + [
+        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
+        ImageChooserPanel('featured_image', help_text="This is the most recent video stream"),
+        InlinePanel('church_care_ministry_faqs', label="Frequently asked questions about the KBC women ministry", help_text="Upload images to the carousel"),
+    
+    ]
+class ChurchCarePageFaqs(Orderable):
+    page = ParentalKey('ChurchCarePage', related_name='church_care_ministry_faqs')
+    question = models.CharField(max_length=800, blank=True)
+    answer = models.CharField (blank=True, max_length=800)
+    panels = [
+        FieldPanel('question'),
+        FieldPanel('answer'),
+    ]
+
+class YoungAdultsPage(Page):
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True,on_delete=models.SET_NULL, related_name='+')
+    about_body = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+        FieldPanel('about_body', classname="full", help_text="This is the intro of the Page"),
+        ImageChooserPanel('hero_image', help_text="This is the most recent video stream"),
+        InlinePanel('young_adults_ministry_faqs', label="Frequently asked questions about the KBC women ministry", help_text="Upload images to the carousel"),
+    
+    ]
+class YoungAdultsPageFaqs(Orderable):
+    page = ParentalKey('YoungAdultsPage', related_name='young_adults_ministry_faqs')
+    question = models.CharField(max_length=800, blank=True)
+    answer = models.CharField (blank=True, max_length=800)
+    panels = [
+        FieldPanel('question'),
+        FieldPanel('answer'),
     ]

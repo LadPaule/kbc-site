@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static bootstrap crispy_forms_tags wagtailcore_tags wagtailimages_tags %} 
+{% block extra_css %}
+<link href="{% static 'css/hero.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% comment %} Hero Section {% endcomment %}
+
+<section id="about-us" class="about-us">
+  {% image self.featured_image original as featured %}
+  <div class="container">
+    <div class="row no-gutters">
+      <div style="background: url('{{ featured.url }}') center center no-repeat; background-size: cover;  min-height: 400px;" class="col-xl-5 d-flex align-items-stretch justify-content-center justify-content-lg-start" data-aos="fade-right"></div>
+      <div class="col-xl-7 ps-0 ps-lg-5 pe-lg-1 d-flex align-items-stretch">
+        <div class="content d-flex flex-column justify-content-center">
+          <h3 style="text-align: center;">About Church Care Ministry</h3> <hr />
+          <div class="row">     
+            <p style="text-align: center; font-size: 20px;">
+              {{self.about_body|richtext}}
+            </p>
+          </div>
+        </div><!-- End .content-->
+      </div>
+    </div>
+
+  </div>
+</section><!-- End About Us Section -->
+
+{% endblock content %}

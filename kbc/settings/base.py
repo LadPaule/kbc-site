@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django_comments_xtd',
     'django_comments',
+    'debug_toolbar',
     'django_social_share',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -95,6 +96,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -173,6 +175,12 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+INTERNAL_IPS = [
+
+    "127.0.0.1",
+
+]
 
 
 # Password validation

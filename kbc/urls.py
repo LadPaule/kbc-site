@@ -14,7 +14,7 @@ from search import views as search_views
 
 urlpatterns = [
     path('django-admin/', admin.site.urls),
-
+    path('__debug__/', include('debug_toolbar.urls')),
     path('admin/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
     path('comments', include(django_comments_xtd_urls)),
