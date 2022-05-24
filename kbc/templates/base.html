@@ -46,7 +46,7 @@
         {% comment %} footer {% endcomment %}
         {% include 'layouts/footer.html' %}
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-        <script type="text/javascript" src="{% static 'js/kbc.js' %}"></script>
+        
 
           <!-- Vendor JS Files -->
           <script src=" {% static 'vendor/aos/aos.js' %}"></script>
@@ -55,6 +55,7 @@
           <script src=" {% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
           <script src=" {% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
           <script src=" {% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
+          <script type="text/javascript" src="{% static 'js/kbc.js' %}"></script>
           {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}
