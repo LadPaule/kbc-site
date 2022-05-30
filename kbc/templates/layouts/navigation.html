@@ -21,18 +21,23 @@
 
         <li class="dropdown"><a href=""><span>Ministries</span> </a>
           <ul class="">
-            <li><a href="/children-ministry">Children</a></li>
             <li><a href="/worship">Worship</a></li>
+            <li><a href="/children-ministry">Children</a></li>
             <li><a href="/youths">Youth</a></li>
-            <li><a href="/kbc-adults">Adults</a></li>
             <li><a href="/discipleship">Discipleship</a></li>
+            <li><a href="/missions">Missions</a></li>
+            <li><a href="/church-care">Church Care</a></li>
+            <li><a href="/young-adults">Young Adults</a></li>
+            <li><a href="/couples">couples</a></li>
+            <li><a href="/men">men</a></li>
+            <li><a href="/women">women</a></li>
           </ul>
         </li>
         <li class="dropdown"><a href="#"><span>Leadership</span> </a>
           <ul class="">
             <li><a href="/pastorate">Pastorate</a></li>
             <li><a href="/elders-board">Chairman Elders&apos; Board</a></li>
-            <li><a href="/staff">Chairman Deacon&apos;s Board</a></li>
+            <li><a href="/deacons-board">Chairman Deacon&apos;s Board</a></li>
           </ul>
         </li>
         <li class="dropdown"><a href="#"><span>Resources</span> </a>
@@ -44,17 +49,17 @@
         <li class="dropdown"><a href=""><span>Responses</span> </a>
           <ul class="">
             <li><a href="/prayer-request">Prayer Request</a></li>
-            <li><a href="/appointments">Appointment</a></li>
+            <li><a href="/appointment">Appointment</a></li>
           </ul>
         </li>
         <li><a href="/contact">Contact Us</a></li>
         <li><a href="/give">Give</a></li>
-        <li>
+        {% comment %} <li>
           {% if request.user.is_authenticated %}
           <a href="/admin">Admin</a></li>
           {% else %}
           <a href="/admin">Guest</a></li>
-          {% endif %}
+          {% endif %} {% endcomment %}
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav><!-- .navbar -->

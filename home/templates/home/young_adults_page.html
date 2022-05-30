@@ -8,13 +8,13 @@
 {% comment %} Hero Section {% endcomment %}
 
 <section id="about-us" class="about-us">
-  {% image self.featured_image original as featured %}
+  {% image self.hero_image original as featured %}
   <div class="container">
     <div class="row no-gutters">
-      <div style="background: url('{{ featured.url }}') center center no-repeat; background-size: cover;  min-height: 400px;" class="col-xl-5 d-flex align-items-stretch justify-content-center justify-content-lg-start" data-aos="fade-right"></div>
+      <div style="background: url('{{ featured.url }}') center center no-repeat; background-size: cover;  min-height: 400px; border-radius: 10px;" class="col-xl-5 d-flex align-items-stretch justify-content-center justify-content-lg-start" data-aos="fade-right"></div>
       <div class="col-xl-7 ps-0 ps-lg-5 pe-lg-1 d-flex align-items-stretch">
         <div class="content d-flex flex-column justify-content-center">
-          <h3 style="text-align: center;">About Church Care Ministry</h3> <hr />
+          <h3 style="text-align: center;">About KBC Young Adults Ministry</h3> <hr />
           <div class="row">     
             <p style="text-align: center; font-size: 20px;">
               {{self.about_body|richtext}}
@@ -26,5 +26,29 @@
 
   </div>
 </section><!-- End About Us Section -->
+
+<!-- ======= Frequently Asked Questions Section ======= -->
+<section id="faq" class="faq section-bg">
+  <div class="container" data-aos="fade-up">
+    <div class="section-title">
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <ul>
+        {% for faq in page.young_adults_ministry_faqs.all %}
+        <li data-aos="fade-up">
+          <i class="bx bx-help-circle icon-help"></i> 
+            <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">{{ faq.question }} <i class="bx bx-chevron-down icon-show"></i>
+              <i class="bx bx-chevron-up icon-close"></i></a>
+          <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+            <p>{{ faq.answer }} </p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
 
 {% endblock content %}

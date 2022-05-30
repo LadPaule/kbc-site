@@ -139,8 +139,8 @@
         <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left" style="height:350px; overflow-y: scroll; overflow-x: auto">
           <p style="text-align: center; font-weight: bold; padding-top: 18px">Our Weekly Activities</p><hr/>
           {% comment %} Weekly activities table {% endcomment %}
-          <table class="table table-bordered table-hover">
-              {{ page.tabled }}
+          <table  class="table table-bordered table-hover">
+              {{ page.tabled|safe }}
           </table>
         </div>
       </div>

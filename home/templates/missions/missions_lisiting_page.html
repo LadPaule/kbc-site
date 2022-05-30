@@ -1,0 +1,49 @@
+{% extends "other_base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
+
+{% block body_class %}template-homepage{% endblock %}
+{% block extra_css %}
+
+{% endblock extra_css %}
+
+{% block content %}
+  <main id="main">
+
+    
+   <!-- ======= Services Section ======= -->
+   <section class="ftco-section" style="margin-top: 70px;">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>HOPCO<strong> Events</strong></h2>
+      </div>
+      <div class="row">
+
+        {% for event in events_pages %}
+        {% image event.featured_image original as even %}
+          <div class="col-md-4 d-flex ftco-animate">
+            <div class="blog-entry align-self-stretch">
+              <a href="{% pageurl event %}" class="block-20">
+                <img src="{{ even.url }}" class="img-fluid" alt="">
+              </a>
+              <div class="text p-4 d-block">
+                <div class="meta mb-3" style="display: flex; justify-content: space-between;">
+                  <div><a href="{% pageurl event %}">{{ event.event_date }}</a></div>
+                  <div><a href="#">Admin</a></div>
+                </div>
+                <h3 style="font-size: 18px;" class="heading mb-4"><a href="{% pageurl event %}">{{ event.page_title }}</a></h3>
+                <p class="time-loc"><span><i class="bi bi-geo-alt-fill"></i>{{ event.event_venue }}</span></p>
+                <p>{{ event.body|richtext|truncatewords:8 }}</p>
+                <p><a href="{% pageurl event %}">read more <i class="bi bi-blockquote-right"></i></a></p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
+    </div>
+  </section>
+  
+
+
+{% endblock content %}
+
+ 

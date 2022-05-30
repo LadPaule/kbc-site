@@ -13,6 +13,7 @@ INSTALLED_APPS = [
     'home',
     'search',
     'kbc',
+    'missions',
     'blog',
     'admindashboard',
     'crispy_forms',
