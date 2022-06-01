@@ -1,4 +1,4 @@
-{% extends "other_base.html" %}
+{% extends "base.html" %}
 {% load static wagtailcore_tags wagtailimages_tags wagtailembeds_tags %} 
 
 {% block body_class %}template-homepage{% endblock %}
@@ -7,17 +7,71 @@
 {% endblock extra_css %}
 
 {% block content %}
-  <main id="main">
 
-    
+ <!-- ======= Services Section ======= -->
+ <section id="services" class="services">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2>KBC <strong>Upcoming Missions</strong></h2>
+    </div>
+    <div class="row">
+      {% for mission in self.missions_ministry_upcoming.all %}
+      <div class="col-lg-4 col-md-6">
+        {% image mission.mission_promo_image original as even %}
+        <div class="blog-entry align-self-stretch">
+            <img src="{{ even.url }}" class="img-fluid" alt="">
+          <div class="text p-4 d-block">
+            <div class="meta mb-3" style="display: flex; justify-content: space-between;">
+              <div><i class="bi bi-clock"></i> {{ mission.mission_date }}</div>
+              <div><a href="#">Admin</a></div>
+            </div>
+            <h3 style="font-size: 18px;" class="heading mb-4">{{ mission.mission_title }}</h3>
+            <p class="time-loc"><span><i class="bi bi-geo-alt-fill"></i>{{ mission.mission_venue }}</span></p>
+            <p>{{ mission.mission_body|richtext|truncatewords:8 }}</p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              read more <i class="bi bi-blockquote-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Modal -->
+      {% comment %} todo: popup modal for the selected upcoming modal {% endcomment %}
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">{{ mission.mission_title }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <img src="{{ even.url }}" alt="" width="450px"/>
+              <div class="meta mb-3" style="display: flex; justify-content: space-between;">
+                <div><i class="bi bi-clock"></i> {{ mission.mission_date }}</div>
+                <div><i class="bi bi-geo-alt-fill"></i> {{ mission.mission_venue }}</div>
+              </div>
+              <p class="description">{{ mission.mission_body|richtext}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close blog</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {% endfor %}
+    </div>
+  </div>
+</section><!-- End Services Section -->
+
+
+
    <!-- ======= Services Section ======= -->
    <section class="ftco-section" style="margin-top: 70px;">
     <div class="container">
       <div class="section-title" data-aos="fade-up">
-        <h2>HOPCO<strong> Events</strong></h2>
+        <h2>KBC <strong>Past Missions</strong></h2>
       </div>
       <div class="row">
-
         {% for event in events_pages %}
         {% image event.featured_image original as even %}
           <div class="col-md-4 d-flex ftco-animate">
@@ -38,12 +92,31 @@
             </div>
           </div>
         {% endfor %}
+    </div>
+  </section>
 
+
+  <section id="faq" class="faq section-bg">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>About KBC Missions Ministry</h2>
+      </div>
+      <hr />
+      <div class="faq-list">
+        {{ self.body|richtext }}
+      </div>
     </div>
   </section>
   
-
-
 {% endblock content %}
 
- 
+{% block extra_js %}
+  <script>
+    const myModal = document.getElementById('myModal')
+    const myInput = document.getElementById('myInput')
+    
+    myModal.addEventListener('shown.bs.modal', () => {
+      myInput.focus()
+    })
+  </script>
+{% endblock extra_js %}

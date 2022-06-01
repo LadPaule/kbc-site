@@ -12,7 +12,6 @@ from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from django.contrib.auth.models import User
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtailmedia.edit_handlers import MediaChooserPanel
 from wagtail.search import index
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.snippets.models import register_snippet
@@ -25,6 +24,7 @@ class MissionsLisitingPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('page_title'),
         FieldPanel('body', classname="full"),
+        InlinePanel('missions_ministry_upcoming', label="Upcoming Missions", max_num=3),
         InlinePanel('missions_ministry_faqs', label="Frequently asked questions about the KBC missions ministry", help_text="Upload images to the carousel"),
     ]
     def get_context(self, request, *args, **kwargs):
@@ -47,6 +47,22 @@ class MissionsLisitingPage(Page):
         context["events_pages"] = events_pages
 
         return context
+
+class upcomingMissions(Orderable):
+    page = ParentalKey('MissionsLisitingPage', related_name='missions_ministry_upcoming')
+    mission_promo_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+    mission_title = models.CharField(max_length=255, blank=True, null=True)
+    mission_venue = models.CharField(max_length=255, blank=True, null=True)
+    mission_date = models.DateField(blank=True, null=True)
+    mission_body = RichTextField(blank=True)
+
+    panels = [
+        ImageChooserPanel('mission_promo_image'),
+        FieldPanel('mission_title'),
+        FieldPanel('mission_venue'),
+        FieldPanel('mission_date'),
+        FieldPanel('mission_body'),
+    ]
 class MissionsPageFaqs(Orderable):
     page = ParentalKey(MissionsLisitingPage, related_name='missions_ministry_faqs')
     question = models.CharField(max_length=800, blank=True)
