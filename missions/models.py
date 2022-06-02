@@ -7,6 +7,10 @@ from wagtail.core.models import Page, Orderable
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtail.core.fields import RichTextField, StreamField
 from taggit.models import TaggedItemBase
+
+from wagtail_embed_videos import get_embed_video_model_string
+from wagtail_embed_videos.edit_handlers import EmbedVideoChooserPanel
+from wagtailmedia.edit_handlers import MediaChooserPanel
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, FieldRowPanel, StreamFieldPanel
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
@@ -72,8 +76,6 @@ class MissionsPageFaqs(Orderable):
         FieldPanel('answer'),
     ]
 # todo: single event page
-
-
 class MissionPage(Page):
     page_title = models.CharField(max_length=255, blank=True, null=True)
     featured_image = models.ForeignKey('wagtailimages.Image', null=True, on_delete=models.SET_NULL, related_name='+')
@@ -102,3 +104,65 @@ class MissionPage(Page):
         if search_query:
             self.event_pages = self.event_pages.search(search_query)
         return self.render(request)
+# todo: add Summons Landing page
+class SummonsLisitingPage(Page):
+    page_title = models.CharField(max_length=255, blank=True, null=True)
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, on_delete=models.SET_NULL, related_name='+')
+    hero_title = models.CharField(max_length=255, blank=True, null=True)
+    hero_caption = models.CharField(max_length=255, blank=True, null=True)
+    content_panels = Page.content_panels + [
+        FieldPanel('page_title'),
+        ImageChooserPanel('hero_image'),
+        FieldPanel('hero_title'),
+        FieldPanel('hero_caption'),
+        InlinePanel('summons_ministry_upcoming', label="Upcoming Summons", max_num=3),
+        InlinePanel('featured_summons', label="featured summons", help_text="Upload images to the carousel", max_num=3),
+    ]
+class FeaturedSummons(Orderable):
+    page = ParentalKey(SummonsLisitingPage, related_name='featured_summons')
+    video = models.ForeignKey(get_embed_video_model_string(), null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+    title = models.CharField(max_length=255, blank=True, null=True)
+    media = models.ForeignKey('wagtailmedia.Media', null=True, blank=True, on_delete=models.SET_NULL, related_name="+", help_text="Video or image to be displayed on the home page")
+    date = models.DateField(blank=True, null=True, help_text="Date of the summons")
+    panels = [
+        EmbedVideoChooserPanel('video', help_text="This is the most recent video stream"),
+        MediaChooserPanel("media", media_type="audio"),
+        FieldPanel('title'),
+        FieldPanel('date'),
+    ]
+class upcomingSummons(Orderable):                      
+    page = ParentalKey(SummonsLisitingPage, related_name='summons_ministry_upcoming')
+    Summon_video = models.ForeignKey(get_embed_video_model_string(), null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+    summons_title = models.CharField(max_length=255, blank=True, null=True)
+    audio_media = models.ForeignKey('wagtailmedia.Media', null=True, blank=True, on_delete=models.SET_NULL, related_name="+", help_text="Video or image to be displayed on the home page")
+    summon_date = models.DateField(blank=True, null=True, help_text="Date of the summons")
+    panels = [
+        EmbedVideoChooserPanel('Summon_video', help_text="This is the most recent video stream"),
+        MediaChooserPanel("audio_media", media_type="audio"),
+        FieldPanel('summons_title'),
+        FieldPanel('summon_date'),
+    ]
+
+
+class ShortSummonsPage(Page):
+    hero_image = models.ForeignKey('wagtailimages.Image', null=True, on_delete=models.SET_NULL, related_name='+')
+    hero_title = models.CharField(max_length=255, blank=True, null=True)
+    hero_caption = models.CharField(max_length=255, blank=True, null=True)
+    content_panels = Page.content_panels + [
+        ImageChooserPanel('hero_image'),
+        FieldPanel('hero_title'),
+        FieldPanel('hero_caption'),
+        InlinePanel('summons', label="Upcoming Summons", max_num=6),
+    ]
+
+class Summons(Orderable):
+    page = ParentalKey(ShortSummonsPage, related_name='summons')
+    Summon_video = models.ForeignKey(get_embed_video_model_string(), null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+    summons_title = models.CharField(max_length=255, blank=True, null=True)
+    summon_date = models.DateField(blank=True, null=True, help_text="Date of the summons")
+    panels = [
+        EmbedVideoChooserPanel('Summon_video', help_text="This is the most recent video stream"),
+        FieldPanel('summons_title'),
+        FieldPanel('summon_date'),
+    ]
+

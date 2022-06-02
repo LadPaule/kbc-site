@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags embed_video_tags wagtailimages_tags wagtailembeds_tags %} 
+{% block body_class %}template-homepage{% endblock %}
+{% block extra_css %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"  integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="  crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="  crossorigin="anonymous" />
+{% endblock extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/mamba.css' %}">
+{% block content %}
+ <!-- ======= Hero Section ======= -->
+<section id="hero" style="max-height: 500px; margin-top: -20px;">
+  <div class="hero-container d-flex flex-column justify-content-end align-items-center">
+    {% image self.hero_image original as hero %}
+    <div id="heroCarousel" class="carousel slide carousel-fade">
+      <div class="carousel-inner" role="listbox">
+        <!-- Slide 1 -->
+        <div class="carousel-item active" style="background-image: url('{{ hero.url }}');">
+          <div class="carousel-container">
+            <div class="carousel-content container"style="text-align: center;">
+              <h2 class="animate__animated animate__fadeInDown">{{ self.hero_title }}</h2>
+              <p class="animate__animated animate__fadeInUp">{{ self.hero_caption}}</p>
+              <br />
+              <br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- End Hero -->
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+      <div class="container">
+        <div class="section-title">
+          <h2 style="text-transform: capitalize;">Featured Summons</h2>
+        </div>
+        <div class="row">
+          {% for summon in page.featured_summons.all %}
+          <div class="col-lg-4 col-md-6">
+            <div class="icon-box" data-aos="fade-up">
+              {% video summon.video.url as my_video %}
+                {% video my_video '350x250' %}
+              {% endvideo %}
+              <h4 class="title"><a href="">{{ summon.summons_title }}</a></h4>
+              <p class="description">Or Listen to the Audio Summon</p>
+              <audio controls>
+                <source src="{{ summon.media.url }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
+
+    <div class="container-fluid my-5">
+      <p style="font-size: 20px;" class="text-center fw-bold display-1 mb-5">KBC Older<span class="text-danger"> Summons</span></p>
+      <div class="row">
+          <div class="col-12 m-auto">
+              <div class="owl-carousel owl-theme">
+                  {% for summon in self.summons_ministry_upcoming.all %}
+                    <div class="item {% if forloop.first %} mb-4 {% endif %}">
+                      <div class="card border-0 shadow">
+                        {% video summon.Summon_video.url as my_video %}
+                          {% video my_video '350x250' %}
+                        {% endvideo %}
+                          <div class="card-body">
+                              <div class="card-title text-center">
+                                  <h4>{{ self.summons_title }}</h4>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+
+
+              </div>
+          </div>
+      </div>
+  </div>
+{% endblock content %}
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+<script>
+  $('.owl-carousel').owlCarousel({
+    loop: true,
+    margin: 15,
+    nav: true,
+    responsive: {
+        0: {
+            items: 1
+        },
+        600: {
+            items: 2
+        },
+        1000: {
+            items: 3
+        }
+    }
+})
+</script>
+  
+{% endblock extra_js %}

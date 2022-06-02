@@ -1,0 +1,87 @@
+{% load static wagtailcore_tags wagtailuserbar %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      {% block title %}
+        {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+      {% endblock %}
+      {% block title_suffix %}
+        {% wagtail_site as current_site %}
+        {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+      {% endblock %}
+    </title>
+      <meta name="description" content="" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      {# Global stylesheets #}
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+      {% include 'seo/se_optmization.html' %}
+      <!-- Vendor CSS Files -->
+      <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+      <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+      <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+      <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+      <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+      <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+      <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+      <link rel="stylesheet" type="text/css" href="{% static 'css/mamba.css' %}">
+      {% block extra_css %}
+        {# Override this in templates to add extra stylesheets #}
+      {% endblock %}
+    </head>
+
+    <body id="body_styles" class="{% block body_class %}{% endblock %}">
+      {% include 'layouts/navigation.html' %}
+
+          {% block content %}
+          
+          {% endblock %}
+
+        {# Global javascript #}
+
+        {% comment %} footer {% endcomment %}
+        {% include 'layouts/footer.html' %}
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+        
+
+          <!-- Vendor JS Files -->
+          <script src=" {% static 'vendor/aos/aos.js' %}"></script>
+          <script src=" {% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+          <script src=" {% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+          <script src=" {% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+          <script src=" {% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+          <script src=" {% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
+          <script type="text/javascript" src="{% static 'js/kbc.js' %}"></script>
+          {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
+    </body>
+    <script>
+      AOS.init();
+
+      document.getElementById("newsletter-signup-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = e.target.elements[0].value;
+        if (email && email.includes("@")) {
+            fetch(e.target.action, {
+                method: e.target.method,
+                body: JSON.stringify({email: email})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("All signed up! Thank you for joining the newsletter!")
+                }
+            })
+            .catch(err => {
+                alert("Looks like we're having an error. Please try again in a moment.")
+            });
+        }    
+    });
+ </script>
+</html>
+     
