@@ -64,12 +64,12 @@
                   {% for summon in self.summons_ministry_upcoming.all %}
                     <div class="item {% if forloop.first %} mb-4 {% endif %}">
                       <div class="card border-0 shadow">
-                        {% video summon.Summon_video.url as my_video %}
-                          {% video my_video '350x250' %}
-                        {% endvideo %}
                           <div class="card-body">
+                            {% video summon.Summon_video.url as my_video %}
+                              {% video my_video '350x250' %}
+                            {% endvideo %}
                               <div class="card-title text-center">
-                                  <h4>{{ self.summons_title }}</h4>
+                                  <h4 style="font-size: 15px; color: blue;">{{ summon.summons_title }}</h4>
                               </div>
                           </div>
                       </div>
