@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags embed_video_tags wagtailimages_tags wagtailembeds_tags %} 
+{% block body_class %}template-homepage{% endblock %}
+{% block extra_css %}
+{% endblock extra_css %}
+{% block content %}
+ <!-- ======= Hero Section ======= -->
+<section id="hero" style="max-height: 500px; margin-top: -20px;">
+  <div class="hero-container d-flex flex-column justify-content-end align-items-center">
+    {% image self.hero_image original as hero %}
+    <div id="heroCarousel" class="carousel slide carousel-fade">
+      <div class="carousel-inner" role="listbox">
+        <!-- Slide 1 -->
+        <div class="carousel-item active" style="background-image: url('{{ hero.url }}');">
+          <div class="carousel-container">
+            <div class="carousel-content container"style="text-align: center;">
+              <h2 class="animate__animated animate__fadeInDown">{{ self.hero_title }}</h2>
+              <p class="animate__animated animate__fadeInUp">{{ self.hero_caption}}</p>
+              <br />
+              <br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!-- End Hero -->
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+      <div class="container">
+        <div class="section-title">
+          <h2 style="text-transform: capitalize;">Featured Summons</h2>
+        </div>
+        <div class="row">
+          {% for summon in page.summons.all %}
+          <div class="col-lg-4 col-md-6">
+            <div class="icon-box" data-aos="fade-up">
+              {% video summon.Summon_video.url as my_video %}
+                {% video my_video '350x250' %}
+              {% endvideo %}
+              <h4 class="title"><a href="">{{ summon.summons_title }}</a></h4>
+             
+              {% if summon.media %}
+              <div style="display: flex; justify-content: space-between;">
+              <p class="description">Listen to the Audio Summon instead ..</p>
+              <i class="bi bi-soundwave"></i>  
+              </div>
+              <audio controls>
+                  <source src="{{ summon.media.url }}" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+              {% endif %}
+             
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section><!-- End Services Section -->
+{% endblock %}

@@ -152,7 +152,7 @@ class ShortSummonsPage(Page):
         ImageChooserPanel('hero_image'),
         FieldPanel('hero_title'),
         FieldPanel('hero_caption'),
-        InlinePanel('summons', label="Upcoming Summons", max_num=6),
+        InlinePanel('summons', label="short Summons", max_num=12),
     ]
 
 class Summons(Orderable):
@@ -164,5 +164,6 @@ class Summons(Orderable):
         EmbedVideoChooserPanel('Summon_video', help_text="This is the most recent video stream"),
         FieldPanel('summons_title'),
         FieldPanel('summon_date'),
+
     ]
 
