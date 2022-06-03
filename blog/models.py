@@ -10,16 +10,32 @@ from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from wagtail.snippets.models import register_snippet
 from wagtail.search import index
 
-class BlogIndexPage(Page):
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+
+class BlogIndexPage(RoutablePageMixin, Page):
 
     # getting the posts to  appear in a reverse order
-    def get_context(self, request):
-        context = super().get_context(request)
-        blogpages = self.get_children().live().order_by('-first_published_at')
-        context['blogpages'] = blogpages
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        #@TODO: Handling Pagination
+        all_sponsored_pages = BlogPage.objects.live().public().order_by('-last_published_at')
+
+        paginator = Paginator(all_sponsored_pages, 4) #@TODO: paginate change integer to 8 per page
+        page = request.GET.get('page')
+        try:
+            sponsored_pages = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            sponsored_pages = paginator.page(1)    
+        except EmptyPage:  
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            sponsored_pages = paginator.page(paginator.num_pages)
+        context["sponsored_pages"] = sponsored_pages
+
         return context
 
 class BlogPageTag(TaggedItemBase):
@@ -61,7 +77,7 @@ class BlogCategory(models.Model):
     class Meta:
         verbose_name_plural = 'blog categories'
 
-class BlogPage(Page):
+class BlogPage(RoutablePageMixin, Page):
     date = models.DateField("Post date")
     author= models.CharField(max_length=100, default='Pr. Andrew Mwenge')
     comments=RichTextField(blank=True)
@@ -75,10 +91,19 @@ class BlogPage(Page):
             return gallery_item.image
         else:
             return None
-
     search_fields = Page.search_fields + [
-        index.SearchField('body'),
+        index.SearchField('categories', partial_match=True, boost=10),
+        index.SearchField('tags', partial_match=True),
+        index.SearchField('date', partial_match=True),
+        index.SearchField('body', partial_match=True),
     ]
+    @route(r"^search/$")
+    def search(self, request, *args, **kwargs):
+        search_query = request.GET.get("q", None)
+        self.sponsored_pages = self.get_sponsored_pages().objects.live().autocomplete("categories", search_query)
+        if search_query:
+            self.sponsored_pages = self.sponsored_pages.search(search_query)
+        return self.render(request)
 
     content_panels = Page.content_panels + [
         MultiFieldPanel([

@@ -20,6 +20,7 @@
           <h2 class="entry-title">
             <a href="blog-single.html">{{ page.title }}</a>
           </h2>
+          <p style=" color: purple; font-size: 24px; font-weight: bold;"><a href="{{  page.get_parent.url }}">Go to listing Page</a></p>
           <div class="entry-meta">
             <ul>
               <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">{{ self.author }}</a></li>
@@ -33,15 +34,20 @@
           </div>
           <div class="entry-footer">
             <i class="bi bi-folder"></i>
+            
             <ul class="cats">
-              <li><a href="#">Business</a></li>
+              {% for category in categories %}
+              <li><a href="#">{{ category.name }}</a></li>
+              {% endfor %}
             </ul>
 
             <i class="bi bi-tags"></i>
             <ul class="tags">
-              <li><a href="#">Creative</a></li>
-              <li><a href="#">Tips</a></li>
-              <li><a href="#">Marketing</a></li>
+              {% if page.tags.all.count %}
+              {% for tag in page.tags.all %}
+                <li><a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag.title }}</a></li>
+              {% endfor %}
+              {% endif %}
             </ul>
           </div>
 
@@ -53,13 +59,13 @@
 
         <div class="sidebar">
 
-          <h3 class="sidebar-title">Search</h3>
+          {% comment %} <h3 class="sidebar-title">Search</h3>
           <div class="sidebar-item search-form">
             <form action="">
               <input type="text">
               <button type="submit"><i class="bi bi-search"></i></button>
             </form>
-          </div><!-- End sidebar search formn-->
+          </div><!-- End sidebar search formn--> {% endcomment %}
 
           <h3 class="sidebar-title">Categories</h3>
           <div class="sidebar-item categories">
@@ -97,19 +103,18 @@
             {% endfor %}
 
           </div><!-- End sidebar recent posts-->
-
+          {% if page.tags.all.count %}
           <h3 class="sidebar-title">Tags</h3>
           <div class="sidebar-item tags">
             <ul>
-              {% if page.tags.all.count %}
                   {% for tag in page.tags.all %}
                   <li><a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a></li>
                   {% endfor %}
                 </div>
-              {% endif %}
+              
             </ul>
           </div><!-- End sidebar tags-->
-
+          {% endif %}
         </div><!-- End sidebar -->
 
       </div><!-- End blog sidebar -->

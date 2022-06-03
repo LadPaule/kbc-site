@@ -827,7 +827,13 @@ section {
 .portfolio-details .portfolio-description p {
   padding: 0;
 }
+.pagina hover:i{
+  background-color: none;
 
+}
+i:hover{
+  background: none;
+}
 /*--------------------------------------------------------------
 # Clients
 --------------------------------------------------------------*/
@@ -1666,6 +1672,7 @@ section {
 .blog .blog-pagination li.active,
 .blog .blog-pagination li:hover {
   background: #006697;
+  color: #fff;
 }
 .blog .blog-pagination li.active a,
 .blog .blog-pagination li:hover a {

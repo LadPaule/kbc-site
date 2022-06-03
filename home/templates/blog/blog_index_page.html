@@ -10,7 +10,7 @@
   <div class="container" data-aos="fade-up">
     <div class="row">
       <div class="col-lg-8 entries">
-        {% for post in blogpages %}
+        {% for post in sponsored_pages %}
           {% with post=post.specific %}
             <article class="entry">
               <div class="entry-img">
@@ -41,18 +41,28 @@
           {% endwith %}
         {% endfor %}
 
-
+        {% if sponsored_pages.paginator.num_pages > 1 %}
         <div class="blog-pagination">
           <ul class="justify-content-center">
-            <li><a href="#">1</a></li>
-            <li class="active"><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
+            {% if sponsored_pages.has_previous %}
+              <li class=" pagina"><a href="?page={{ sponsored_pages.previous_page_number }}"><i style="font-weight: black; font-size: 25px; color: #006697; background: none;" class="bi bi-chevron-double-left"></i></a></li>
+            {% endif %}
+            {% for page_num in sponsored_pages.paginator.page_range %}
+                <li class=" pagina {% if page_num == sponsored_pages.number %} active{% endif %}">
+                  <a href="?page={{ page_num }}">
+                    {{ page_num }}
+                  </a>
+                </li>
+              {% endfor %}
+            {% if sponsored_pages.has_next %}
+              <li class=" pagina" ><a href="?page={{ sponsored_pages.next_page_number }}"> <i style="font-weight: black; font-size: 25px; color: #006697; background: none;" class="bi bi-chevron-double-right"></i></a></li>
+            {% endif %}
           </ul>
         </div>
-
+        {% endif %}
       </div><!-- End blog entries list -->
 
-      <div class="col-lg-4">
+      <div style="display: fixed;" class="col-lg-4">
 
         <div class="sidebar">
 
@@ -64,7 +74,7 @@
             </form>
           </div><!-- End sidebar search formn-->
 
-          <h3 class="sidebar-title">Categories</h3>
+          {% comment %} <h3 class="sidebar-title">Categories</h3>
           <div class="sidebar-item categories">
             <ul>
               <li><a href="#">General <span>(25)</span></a></li>
@@ -74,7 +84,7 @@
               <li><a href="#">Creative <span>(8)</span></a></li>
               <li><a href="#">Educaion <span>(14)</span></a></li>
             </ul>
-          </div><!-- End sidebar categories-->
+          </div><!-- End sidebar categories--> {% endcomment %}
 
           <h3 class="sidebar-title">Recent Posts</h3>
           <div class="sidebar-item recent-posts">
@@ -101,17 +111,12 @@
           <h3 class="sidebar-title">Tags</h3>
           <div class="sidebar-item tags">
             <ul>
-              <li><a href="#">App</a></li>
-              <li><a href="#">IT</a></li>
-              <li><a href="#">Business</a></li>
-              <li><a href="#">Mac</a></li>
-              <li><a href="#">Design</a></li>
-              <li><a href="#">Office</a></li>
-              <li><a href="#">Creative</a></li>
-              <li><a href="#">Studio</a></li>
-              <li><a href="#">Smart</a></li>
-              <li><a href="#">Tips</a></li>
-              <li><a href="#">Marketing</a></li>
+              <li><a href="#">Christian Living</a></li>
+              <li><a href="#">Discipleship</a></li>
+              <li><a href="#">Fellowship</a></li>
+              <li><a href="#">prayer</a></li>
+              <li><a href="#">Conduct</a></li>
+              <li><a href="#">Love</a></li>
             </ul>
           </div><!-- End sidebar tags-->
 
