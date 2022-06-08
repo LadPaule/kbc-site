@@ -1,6 +1,8 @@
 /node_modules
 /media
 .vercel
+.vscode
+.env
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

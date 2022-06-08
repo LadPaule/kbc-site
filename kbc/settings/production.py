@@ -1,4 +1,5 @@
 from __future__ import absolute_import, unicode_literals
+from decouple import config
 from .base import *
 import dj_database_url
 
@@ -8,7 +9,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ROOT_URLCONF = 'kbc.urls.py'
 
-SECRET_KEY = 'h7749i^i*3h5fnm@g-el82j4sj!45si!h-@1ejh@9c16y79&6-'
+SECRET_KEY = config('prod_key')
 
 ALLOWED_HOSTS = ['*', 'vercel.app']
 

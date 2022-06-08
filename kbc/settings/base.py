@@ -1,3 +1,5 @@
+from decouple import config
+
 import os
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -15,6 +17,7 @@ INSTALLED_APPS = [
     'kbc',
     'missions',
     'blog',
+    'subscribe',
     'admindashboard',
     'crispy_forms',
     'streams',
@@ -46,7 +49,7 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
-    'mjml',
+
     'embed_video',
     'newsletter',
     'birdsong',
@@ -80,14 +83,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+FROM_EMAIL = config('EMAIL_HOST_USER')
+SEND_IN_BLUE_API_KEY = config('API_KEY')
 
-EMAIL_HOST = 'in-v3.mailjet.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'paul'
-EMAIL_HOST_PASSWORD = 'Onemelchizedec'
-
-MJML_EXEC_CMD = './node_modules/.bin/mjml'
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
