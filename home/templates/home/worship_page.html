@@ -9,13 +9,13 @@
 {% block content %}
 {% image self.hero_image original as hero_image %}
 <section
-  style="background-image: url('{{ hero_image.url }}'), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)); background-repeat: no-repeat;background-size:cover;"
+  style="margin-top: -10px; background-image: url('{{ hero_image.url }}'), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)); background-repeat: no-repeat;background-size:cover;"
   id="heroArea" class="d-flex flex-column justify-content-end align-items-center">
  <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
    <div class="carousel-item active">
      <div class="carousel-containered">
-       <h4 class="animate__animated animate__fadeInDown text-blue" style="font-size: 36px; font-weight: bold;"> KBC  <span>Worship Ministry </span></h4>
-       <p class="animate__animated fanimate__adeInUp"></p>
+       <h4 class="animate__animated animate__fadeInDown text-white">  <span> </span></h4>
+       <p class="animate__animated fanimate__adeInUp">{{ hero_image.caption }}</p>
      </div>
    </div>
    <div class="carousel-containered">

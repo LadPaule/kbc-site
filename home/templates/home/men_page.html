@@ -8,20 +8,19 @@
 {% comment %} Hero Section {% endcomment %}
 
 {% image self.hero_image original as hero_image %}
-<section
-  style="margin-top: -10px; background-image: url('{{ hero_image.url }}'), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)); background-repeat: no-repeat;background-size:cover;"
+<section style="margin-top: -10px; background-image: url('{{ hero_image.url }}'), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)); background-repeat: no-repeat;background-size:cover; width: 100%; height: auto;"
   id="heroArea" class="d-flex flex-column justify-content-end align-items-center">
- <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
-   <div class="carousel-item active">
-     <div class="carousel-containered">
-       <h4 class="animate__animated animate__fadeInDown text-white">  <span> </span></h4>
-       <p class="animate__animated fanimate__adeInUp">{{ hero_image.caption }}</p>
-     </div>
-   </div>
-   <div class="carousel-containered">
-    <h4 class="animate__animated animate__fadeInDown text-white">  <span> </span></h4>
-    <p class="animate__animated fanimate__adeInUp">{{ hero_image.caption }}</p>
-  </div>
+  <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
+    <div class="carousel-item active">
+      <div class="carousel-containered">
+        <h4 class="animate__animated animate__fadeInDown text-white">  <span> </span></h4>
+        <p class="animate__animated fanimate__adeInUp">{{ hero_image.caption }}</p>
+      </div>
+    </div>
+    <div class="carousel-containered">
+     <h4 class="animate__animated animate__fadeInDown text-white">  <span> </span></h4>
+     <p class="animate__animated fanimate__adeInUp">{{ hero_image.caption }}</p>
+    </div>
   </div>
   <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
     <defs>
@@ -41,64 +40,63 @@
 
 {% comment %} todo: add events and men's blog here {% endcomment %}
     <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-      <div class="container">
-
-        <div class="row">
-          <div class="col-lg-4 col-md-6">
-            <div style="text-align: left" class="icon-box" data-aos="fade-up">
-              <div style="display: flex; flex-direction: row; justify-content: space-between;"``>
-                <i style="font-size: 48px; font-weight: black;" class="bi bi-calendar2-check-fill"></i>
-                <h4 class="title"><a href="">Upcoming Event</a></h4> 
-              </div>
-              <hr />
-              <h3 style="font-weight: bold; font-size: 16px;" >{{ self.event_title }}</h3>
-              <p class="description">{{ self.event_body|richtext }}</p>
-            </div>
+<section id="services" class="services">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-6">
+        <div style="text-align: left" class="icon-box" data-aos="fade-up">
+          <div style="display: flex; flex-direction: row; justify-content: space-between;"``>
+            <i style="font-size: 48px; font-weight: black;" class="bi bi-calendar2-check-fill"></i>
+            <h4 class="title"><a href="">Upcoming Event</a></h4> 
           </div>
-          <div class="col-md-6 col-lg-8">
-            {% image self.men_blog_image original as blog %}
-            <div style="text-align: left" class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                <i style="font-size: 48px; font-weight: black;" class="bi bi-card-text"></i>
-                <h4 class="title"><a href="">KBC Men&apos;s Blog</a></h4>
-              </div>
-              <hr />
-              <img src="{{ blog.url }}" alt="" width="600px"/>
-              <h3 style="font-weight: black; font-size: 16px" >{{ self.men_blog_title }}</h3>
-              <p class="description">{{ self.men_blog_body|richtext|truncatewords:12 }}</p>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Read more</button></div>
+          <hr />
+          <h3 style="font-weight: bold; font-size: 16px;" >{{ self.event_title }}</h3>
+          <p class="description">{{ self.event_body|richtext }}</p>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-6">
+        {% image self.men_blog_image original as blog %}
+        <div style="text-align: left" class="icon-box" data-aos="fade-up" data-aos-delay="100">
+          <div style="display: flex; flex-direction: row; justify-content: space-between;">
+            <i style="font-size: 48px; font-weight: black;" class="bi bi-card-text"></i>
+            <h4 class="title"><a href="">KBC Men&apos;s Blog</a></h4>
+          </div>
+          <hr />
+          <img src="{{ blog.url }}" alt="" width="600px"/>
+          <h3 style="font-weight: black; font-size: 16px" >{{ self.men_blog_title }}</h3>
+          <p class="description">{{ self.men_blog_body|richtext|truncatewords:12 }}</p>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Read more</button></div>
+        </div>
+      </div>
+        </div>
+      </div>
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">{{ self.men_blog_title }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <img src="{{ blog.url }}" alt="" width="450px"/>
+              <p class="description">{{ self.men_blog_body|richtext}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close blog</button>
             </div>
           </div>
         </div>
       </div>
-    </section><!-- End Services Section -->
+</section><!-- End Services Section -->
     <!--todo: Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ self.men_blog_title }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <img src="{{ blog.url }}" alt="" width="450px"/>
-        <p class="description">{{ self.men_blog_body|richtext}}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close blog</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <section id="services" class="services">
   <div class="container">
     <h4 class="title"><a href="">About KBC Men&apos;s Ministry</a></h4> 
     <p class="description">{{ self.about_body|richtext }}</p>
   </div>
-<section>
-
+</section>
 <!-- ======= Frequently Asked Questions Section ======= -->
 <section id="faq" class="faq section-bg">
   <div class="container" data-aos="fade-up">
@@ -111,7 +109,8 @@
         <li data-aos="fade-up">
           <i class="bx bx-help-circle icon-help"></i> 
             <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">{{ faq.question }} <i class="bx bx-chevron-down icon-show"></i>
-              <i class="bx bx-chevron-up icon-close"></i></a>
+              <i class="bx bx-chevron-up icon-close"></i>
+            </a>
           <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
             <p>{{ faq.answer }} </p>
           </div>
